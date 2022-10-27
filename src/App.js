@@ -17,8 +17,8 @@ const App = () => {
       <div className='content'>
         <Router>
           <Routes>
-            <Route path='/' element={<FlashcardCreator />}></Route>
-            <Route path='/profile' element={<FlashcardCreator />}></Route>
+            <Route path='/' element={<></>}></Route>
+            <Route path='/profile' element={<></>}></Route>
             <Route path='/studio' element={
               <Canvas id="three-canvas-container" shadows>
                 <Suspense fallback={<></>}>
@@ -27,8 +27,8 @@ const App = () => {
               </Canvas>}>
             </Route>
             <Route path='/flashcards' element={<FlashcardCreator />}></Route>
-            <Route path='/settings' element={<FlashcardCreator />}></Route>
-            <Route path='/sign-out' element={<FlashcardCreator />}></Route>
+            <Route path='/settings' element={<></>}></Route>
+            <Route path='/sign-out' element={<></>}></Route>
           </Routes>
         </Router>
       </div>

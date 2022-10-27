@@ -76,7 +76,7 @@ const FlashcardCreator = () => {
     }
 
     return (
-        <>
+        <div className='flashcard-creator-container'>
             <div className='form-div'>
                 <input
                     className='textfield'
@@ -94,7 +94,7 @@ const FlashcardCreator = () => {
             </div>
             <button onClick={queryDB}>Query DB</button>
             <div dangerouslySetInnerHTML={{ __html: stateToHTML(editorState.getCurrentContent(), options) }}></div>
-        </>
+        </div>
     )
 };
 
