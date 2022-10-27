@@ -13,18 +13,25 @@ import './App.css'
 const App = () => {
   return (
     <>
-      <Menu />
-      <Router>
-        <Routes>
-          <Route path='/' element={<FlashcardCreator />}></Route>
-          <Route path='/studio' element={
-            <Canvas id="three-canvas-container" shadows>
-              <Suspense fallback={<></>}>
-                <Three />
-              </Suspense>
-            </Canvas>}></Route>
-        </Routes>
-      </Router>
+      <Menu className='menu' />
+      <div className='content'>
+        <Router>
+          <Routes>
+            <Route path='/' element={<FlashcardCreator />}></Route>
+            <Route path='/profile' element={<FlashcardCreator />}></Route>
+            <Route path='/studio' element={
+              <Canvas id="three-canvas-container" shadows>
+                <Suspense fallback={<></>}>
+                  <Three />
+                </Suspense>
+              </Canvas>}>
+            </Route>
+            <Route path='/flashcards' element={<FlashcardCreator />}></Route>
+            <Route path='/settings' element={<FlashcardCreator />}></Route>
+            <Route path='/sign-out' element={<FlashcardCreator />}></Route>
+          </Routes>
+        </Router>
+      </div>
     </>
   )
 }

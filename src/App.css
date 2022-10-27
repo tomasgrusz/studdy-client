@@ -9,3 +9,8 @@
 h1 {
   position: absolute;
 }
+
+.content {
+  float: right;
+  width: 80%;
+}

@@ -1,0 +1,11 @@
+.sidebar-container {
+  /* display: block;
+  position: fixed;
+  top: 20%;
+  left: 1rem; */
+  border-radius: 1px solid blue;
+  background-color: blue;
+  height: 100vh;
+  float: left;
+  width: 20%;
+}
