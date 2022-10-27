@@ -1,18 +1,30 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
-import './App.css'
 import Three from './components/three';
-import { FlashcardCreator } from './components/flashcardCreator';
+import { Suspense } from 'react';
 
-function App() {
+
+import { FlashcardCreator } from './components/flashcardCreator';
+import { Menu } from './components/Menu';
+
+import './App.css'
+
+const App = () => {
   return (
     <>
-      <FlashcardCreator></FlashcardCreator>
-      {/* <Canvas id="three-canvas-container" shadows>
-        <Suspense fallback={<></>}>
-          <Three />
-        </Suspense>
-      </Canvas> */}
+      <Menu />
+      <Router>
+        <Routes>
+          <Route path='/' element={<FlashcardCreator />}></Route>
+          <Route path='/studio' element={
+            <Canvas id="three-canvas-container" shadows>
+              <Suspense fallback={<></>}>
+                <Three />
+              </Suspense>
+            </Canvas>}></Route>
+        </Routes>
+      </Router>
     </>
   )
 }
