@@ -31,9 +31,7 @@ const FlashcardCreator = () => {
 
     const [title, setTitle] = useState('');
     const [editorState, setEditorState] = React.useState(() => EditorState.createEmpty())
-    const [editorState2, setEditorState2] = React.useState(() => EditorState.createEmpty())
     const editorRef = useRef(null)
-    const editorRef2 = useRef(null)
 
     const printTitle = event => {
         event.preventDefault();
@@ -50,16 +48,9 @@ const FlashcardCreator = () => {
         inlineStyles: {
             HIGHLIGHT: {
                 style: { background: "#fffe0d" },
-                class: 'hiddenText'
+                class: 'hiddenText',
             }
         }
-    }
-
-    const duplicateEditor = () => {
-        const html = stateToHTML(editorState.getCurrentContent(), options)
-        console.log(html)
-        setEditorState2(EditorState.createWithContent(stateFromHTML(html)))
-        console.log(stateToHTML(editorState2.getCurrentContent()))
     }
 
     const queryDB = async () => {
@@ -101,9 +92,8 @@ const FlashcardCreator = () => {
                 </div>
                 <input type='button' value='Submit' onClick={printTitle} />
             </div>
-            <button onClick={duplicateEditor}>Duplicate</button>
-            <Editor editorState={editorState2} onChange={setEditorState2} placeholder="Card description" ref={editorRef2} />
             <button onClick={queryDB}>Query DB</button>
+            <div dangerouslySetInnerHTML={{ __html: stateToHTML(editorState.getCurrentContent(), options) }}></div>
         </>
     )
 };
