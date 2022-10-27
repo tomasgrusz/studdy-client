@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
+import './App.css'
+import Three from './components/three';
+import { FlashcardCreator } from './components/flashcardCreator';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <FlashcardCreator></FlashcardCreator>
+      {/* <Canvas id="three-canvas-container" shadows>
+        <Suspense fallback={<></>}>
+          <Three />
+        </Suspense>
+      </Canvas> */}
+    </>
+  )
 }
 
-export default App;
+export default App
