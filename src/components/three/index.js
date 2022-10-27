@@ -19,7 +19,7 @@ const Model = () => {
         <>
 
             <PerspectiveCamera makeDefault position={[10, 0, 10]} />
-            <OrbitControls ref={orbitControlsRef} enablePan={false} enableZoom={false} maxAzimuthAngle={0} minAzimuthAngle={- Math.PI / 2} maxPolarAngle={Math.PI / 2.2} minPolarAngle={0.5} />
+            <OrbitControls ref={orbitControlsRef} enablePan={false} minDistance={6.0} maxDistance={12} maxAzimuthAngle={0} minAzimuthAngle={- Math.PI / 2} maxPolarAngle={Math.PI / 2.2} minPolarAngle={0.5} />
 
 
             <mesh position={[-1, 1, 1]} castShadow>

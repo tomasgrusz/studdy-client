@@ -1,5 +1,5 @@
 body {
-  background: rgb(239, 219, 177);
+  background: rgb(237, 239, 211);
 }
 
 #three-canvas-container {
@@ -7,7 +7,7 @@ body {
 }
 
 .content {
-  margin-left: 10%;
+  margin-left: 5%;
   /* border: 1px solid red; */
   height: 100%;
   max-height: 100vh;
