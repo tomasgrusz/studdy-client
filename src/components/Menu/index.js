@@ -11,7 +11,7 @@ const Menu = () => {
     return (
         <div className='sidebar-container'>
             <div className='sidebar-header'>
-
+                <label>Studdy <br></br>Logo</label>
             </div>
             <nav className='sidebar'>
                 <ul className='sidebar-list'>

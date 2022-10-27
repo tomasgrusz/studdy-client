@@ -1,23 +1,25 @@
 .sidebar-container {
   height: 100vh;
   float: left;
-  min-width: 7%;
+  min-width: 5%;
   display: flex;
   flex-direction: column;
+  background-color: rgba(46, 20, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
 }
 
 .sidebar-header {
   flex: 1;
+  margin-top: 2rem;
+  color: aliceblue;
 }
 
 .sidebar {
-  background: rgba(4, 0, 17, 0.7);
   padding: 1rem 0;
-  margin: 0 0.5rem;
-  border-radius: 1rem;
-  border: 1px solid rgb(0, 229, 255);
-  margin: 1rem 0.5rem;
-  flex: 5;
+  flex: 8;
 }
 
 .sidebar-list {
@@ -56,4 +58,8 @@
 .sidebar-item:hover .icon {
   color: aliceblue;
   filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.5));
+}
+
+.alt {
+  margin-bottom: 20vh;
 }
