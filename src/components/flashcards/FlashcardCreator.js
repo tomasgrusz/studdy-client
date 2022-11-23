@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { EditorState, RichUtils } from 'draft-js';
 import Editor from 'draft-js-plugins-editor'
 import { stateToHTML } from 'draft-js-export-html'
@@ -28,20 +29,41 @@ const highlightPlugin = {
     }
 }
 
-const FlashcardCreator = () => {
+const FlashcardCreator = ({ deck }) => {
 
     const [editorState, setEditorState] = React.useState(() => EditorState.createEmpty())
     const editorRef = useRef(null)
+    const navigate = useNavigate();
 
-    const [flashcards, setFlashcards] = useState([])
-
-    const printTitle = event => {
+    //function for submitting flashcard to backend for approval
+    const submitFlashcard = async event => {
+        //prevent website reload
         event.preventDefault();
-        console.log(stateToHTML(editorState.getCurrentContent(), options))
-        setFlashcards(flashcards.concat([{
-            html: stateToHTML(editorState.getCurrentContent(), options)
-        }]))
-        console.log(flashcards)
+
+        //convert content from editor to html
+        const flashcard = stateToHTML(editorState.getCurrentContent(), options)
+
+
+        const response = await Axios.post('http://localhost:3001/createFlashcard', {
+            deck: deck,
+            content: flashcard
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
+
+        if (response.data.message === 'Success') {
+            alert('Successfully created Flashcard(s). Please reload to update.')
+        } else if (response.data.message === 'Invalid content') {
+            alert('Something\'s wrong with your content, please check and try again.')
+        } else if (response.data.message === 'Unauthorized') {
+            alert('Your session is outdated, you will be redirected to the login page to sign in again.')
+            navigate('/sign-out')
+        } else {
+            alert('An unexpected error occured, please try again later or contact us.')
+        }
     }
 
     const onHighlight = () => {
@@ -62,8 +84,8 @@ const FlashcardCreator = () => {
             <div className='highlight-button-wrapper'>
                 <button className="highlight-button" onClick={onHighlight}><RiEdit2Fill />Highlight</button>
             </div>
-            <Editor editorState={editorState} onChange={setEditorState} placeholder="Card description" plugins={[highlightPlugin]} ref={editorRef} />
-            <input type='button' value='Submit' onClick={printTitle} />
+            <Editor editorState={editorState} onChange={setEditorState} placeholder="Flashcard Content" plugins={[highlightPlugin]} ref={editorRef} />
+            <input classname='create-flashcard-button' type='button' value='Submit' onClick={submitFlashcard} />
         </div>
     )
 };

@@ -20,7 +20,7 @@ const SelectedDeck = ({ deck }) => {
             <div className="selected-deck-session-wrapper">
                 <button className="session-start-button studdy-button">Session</button>
                 <button className="studdy-button">+</button>
-                <FlashcardCreator className="flashcard-creator" />
+                <FlashcardCreator className="flashcard-creator" deck={deck} />
             </div>
         </div>
     )
