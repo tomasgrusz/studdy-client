@@ -1,0 +1,12 @@
+.login-form {
+  padding-top: 5rem;
+}
+
+.username-input,
+.password-input,
+.login-button {
+  display: block;
+  margin: 0 auto;
+  font-size: 20px;
+  margin-top: 1rem;
+}

@@ -4,7 +4,7 @@
   min-width: 5%;
   display: flex;
   flex-direction: column;
-  background-color: rgba(46, 20, 0, 0.5);
+  background-color: rgba(46, 20, 0, 0.2);
   align-items: center;
   justify-content: center;
   justify-items: center;
@@ -40,7 +40,7 @@
   display: block;
   font-size: 1.5rem;
   width: 100%;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--aura-color);
   margin: 0.25rem 0;
   transition: all 0.2s ease;
 }
@@ -56,8 +56,8 @@
 
 .sidebar-item:hover a,
 .sidebar-item:hover .icon {
-  color: aliceblue;
-  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.5));
+  color: var(--var-text-color);
+  filter: drop-shadow(0px 0px 5px var(--aura-color));
 }
 
 .alt {

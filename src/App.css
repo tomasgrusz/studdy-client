@@ -1,5 +1,26 @@
+/* Global Color Schemes */
+:root {
+  --main-bg-color: #9368b7;
+  --var-bg-color: rgba(237, 246, 249, 0.8);
+  --main-container-color: #edf6f9;
+  --var-container-color: #dbe4ee;
+  --main-text-color: #120d31;
+  --var-text-color: #edf6f9;
+
+  --palette-color-1: #9368b7; /*amethyst*/
+  --palette-color-2: #edf6f9; /*aliceblue*/
+  --palette-color-3: #120d31; /*russianviolet*/
+  --palette-color-4: #98ce00; /*yellowgreen*/
+  --palette-color-5: #8bb174; /*asparagus*/
+  --palette-color-6: #dbe4ee; /* darker aliceblue*/
+
+  --amethyst-rgba: rgba(147, 104, 183, 1);
+
+  --aura-color: rgba(237, 246, 249, 0.6);
+}
+
 body {
-  background: rgb(237, 239, 211);
+  background: var(--main-bg-color);
 }
 
 #three-canvas-container {
@@ -7,8 +28,25 @@ body {
 }
 
 .content {
-  margin-left: 5%;
-  /* border: 1px solid red; */
   height: 100%;
   max-height: 100vh;
+}
+
+/* This section contains global styles for components that appear regularly (like buttons, etc.) */
+.studdy-button {
+  background-color: var(--palette-color-1);
+  border: 2px solid var(--aura-color);
+  border-radius: 1.5rem;
+  color: var(--aura-color);
+  padding: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.studdy-button:hover {
+  cursor: pointer;
+  background-color: var(--palette-color-4);
+  border: 2px solid rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1);
 }
