@@ -43,9 +43,16 @@
   border: 0.5rem solid var(--palette-color-2);
   text-align: center;
   flex: 1;
+  overflow: auto;
 }
 
 .session-start-button {
   margin: 1rem auto;
   padding: 1rem !important;
+}
+
+.flashcard-list {
+  margin: 1rem;
+  align-items: center;
+  height: 100%;
 }

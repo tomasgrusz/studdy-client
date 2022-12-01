@@ -1,9 +1,21 @@
 .flashcard-container {
   text-align: left;
+  background-color: var(--main-container-color);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  cursor: pointer;
 }
 
-.flashcard-title {
+.mark {
+  background-color: #fffe0d;
 }
 
-.flashcard-content {
+.flashcard-back {
+  text-align: center;
 }

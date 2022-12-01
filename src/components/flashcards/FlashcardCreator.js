@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { EditorState, RichUtils } from 'draft-js';
 import Editor from 'draft-js-plugins-editor'
 import { stateToHTML } from 'draft-js-export-html'
@@ -42,7 +42,7 @@ const FlashcardCreator = ({ deck }) => {
 
         //convert content from editor to html
         const flashcard = stateToHTML(editorState.getCurrentContent(), options)
-
+        console.log(flashcard)
 
         const response = await Axios.post('http://localhost:3001/createFlashcard', {
             deck: deck,
@@ -73,8 +73,7 @@ const FlashcardCreator = ({ deck }) => {
     const options = {
         inlineStyles: {
             HIGHLIGHT: {
-                style: { background: "#fffe0d" },
-                class: 'hiddenText',
+                element: 'mark'
             }
         }
     }
@@ -85,7 +84,7 @@ const FlashcardCreator = ({ deck }) => {
                 <button className="highlight-button" onClick={onHighlight}><RiEdit2Fill />Highlight</button>
             </div>
             <Editor editorState={editorState} onChange={setEditorState} placeholder="Flashcard Content" plugins={[highlightPlugin]} ref={editorRef} />
-            <input classname='create-flashcard-button' type='button' value='Submit' onClick={submitFlashcard} />
+            <input className='create-flashcard-button' type='button' value='Submit' onClick={submitFlashcard} />
         </div>
     )
 };

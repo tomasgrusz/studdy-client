@@ -130,7 +130,6 @@ const DeckList = ({ selectedDeckRef }) => {
         }
     }
 
-
     return (
         <div className="decklist-container">
             {isLoaded ?
