@@ -36,6 +36,9 @@ const StudySession = ({ session }) => {
         } else if (response.data.message === 'Unauthorized') {
             alert('Your session is outdated, you will be redirected to the login page to sign in again.')
             navigate('/sign-out')
+        } else if (response.data.message === 'Session Complete') {
+            setFlashcard('completed')
+            setStudySession(response.data.session)
         } else {
             alert('An unexpected error occured, please try again later or contact us.')
         }
@@ -63,12 +66,15 @@ const StudySession = ({ session }) => {
 
             //do something
             console.log(response.data);
-            setFlashcard(response.data.flashcard, console.log(flashcard));
+            setFlashcard(response.data.flashcard);
             setStudySession(response.data.session);
 
         } else if (response.data.message === 'Unauthorized') {
             alert('Your session is outdated, you will be redirected to the login page to sign in again.')
             navigate('/sign-out')
+        } else if (response.data.message === 'Session Complete') {
+            setFlashcard('completed')
+            setStudySession(response.data.session);
         } else {
             alert('An unexpected error occured, please try again later or contact us.')
         }
@@ -87,17 +93,24 @@ const StudySession = ({ session }) => {
                 </div>
                 <ProgressBar color={'#8bb174'} height={20} progress={studySession.progress * 100 / studySession.total} text={`${studySession.progress}/${studySession.total}`} radius={50} />
             </div>
-            <div className='flashcard-wrapper'>
-                {(flashcard === null) ? ''
-                    : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} />}
-                <div className='button-container'>
-                    <button className='confidence-button studdy-button' onClick={e => continueSession('perfect')}>Perfect</button>
-                    <button className='confidence-button studdy-button' onClick={e => continueSession('confident')}>Confident</button>
-                    <button className='confidence-button studdy-button' onClick={e => continueSession('pass')}>Pass</button>
-                    <button className='confidence-button studdy-button' onClick={e => continueSession('unsure')}>Unsure</button>
-                    <button className='confidence-button studdy-button' onClick={e => continueSession('difficult')}>Difficult</button>
+            {(flashcard === 'completed')
+                ? <div className='session-complete-container'>
+                    <label>Congratulations, you have memorized all flashcards in this deck. ❤️</label>
+                    <label>Continue studying other decks or reset session to try again.</label>
+                    <button className='studdy-button' onClick={() => window.location.reload(false)}>Back to Decks</button>
                 </div>
-            </div>
+                : <div className='flashcard-wrapper'>
+                    {(flashcard === null) ? ''
+                        : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} />}
+                    <div className='button-container'>
+                        <button className='confidence-button studdy-button' onClick={e => continueSession('perfect')}>Perfect</button>
+                        <button className='confidence-button studdy-button' onClick={e => continueSession('confident')}>Confident</button>
+                        <button className='confidence-button studdy-button' onClick={e => continueSession('pass')}>Pass</button>
+                        <button className='confidence-button studdy-button' onClick={e => continueSession('unsure')}>Unsure</button>
+                        <button className='confidence-button studdy-button' onClick={e => continueSession('difficult')}>Difficult</button>
+                    </div>
+                </div>
+            }
         </div>
     )
 };
