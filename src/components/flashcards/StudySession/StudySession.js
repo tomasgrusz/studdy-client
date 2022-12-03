@@ -82,7 +82,7 @@ const StudySession = ({ session }) => {
 
     useEffect(() => {
         startSession()
-    }, [])
+    })
 
     return (
         <div className='session-container'>
