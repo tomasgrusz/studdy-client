@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import './StudySession.css'
 
-import ProgressBar from '../../misc/ProgressBar';
-import Category from '../../misc/Category';
 import { Flashcard } from '../Flashcard';
+import { Deck } from '../DeckList';
 
 const StudySession = ({ session }) => {
 
@@ -88,11 +87,7 @@ const StudySession = ({ session }) => {
     return (
         <div className='session-container'>
             <div className="selected-deck-info-wrapper">
-                <div className="deck-info-container">
-                    <h3 className="deck-name">{session.name}</h3>
-                    <Category category={session.category} size='25px' />
-                </div>
-                <ProgressBar color={'#8bb174'} height={20} progress={studySession.progress * 100 / studySession.total} text={`${studySession.progress}/${studySession.total}`} radius={50} />
+                <Deck name={studySession.name} category={studySession.category} total={studySession.total} progress={studySession.progress} stage={studySession.stage} />
             </div>
             {(flashcard === 'completed')
                 ? <div className='session-complete-container'>
