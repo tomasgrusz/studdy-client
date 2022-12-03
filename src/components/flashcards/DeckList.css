@@ -7,13 +7,27 @@
   padding: 0.5rem 1rem 1rem 1rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
+  border: 2px solid transparent;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .deck:hover,
 .selected {
-  cursor: pointer;
   filter: drop-shadow(0px 0px 10px var(--aura-color));
+}
+
+.deck.completed {
+  border: 2px solid var(--star-color);
+  filter: drop-shadow(0px 0px 4px var(--star-color));
+}
+
+.deck:hover.completed {
+  filter: drop-shadow(0px 0px 10px var(--star-color));
+}
+
+.stage-star {
+  color: var(--star-color);
 }
 
 .decklist-container {
@@ -39,6 +53,7 @@
 
 .deck-name {
   margin-right: auto;
+  align-items: center;
 }
 
 .deck-info-container {

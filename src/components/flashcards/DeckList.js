@@ -2,17 +2,39 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import ProgressBar from "../misc/ProgressBar";
 import Category from "../misc/Category";
+import { BsStar, BsStarHalf, BsStarFill } from 'react-icons/bs'
 
 import Axios from 'axios';
 
 import './DeckList.css'
 
-const Deck = ({ name, progress, total, category }) => {
+const Deck = ({ name, progress, total, category, stage }) => {
+
+    const stars = () => {
+        switch (stage) {
+            case 0.5:
+                return <span><BsStarHalf className="stage-star" /></span>
+            case 1:
+                return <span><BsStarFill className="stage-star" /></span>
+            case 1.5:
+                return <span><BsStarFill className="stage-star" /><BsStarHalf className="stage-star" /></span>
+            case 2:
+                return <span><BsStarFill className="stage-star" /><BsStarFill className="stage-star" /></span>
+            case 2.5:
+                return <span><BsStarFill className="stage-star" /><BsStarFill className="stage-star" /><BsStarHalf className="stage-star" /></span>
+            case 3:
+            case 3.5:
+            case 4:
+                return <span><BsStarFill className="stage-star" /><BsStarFill className="stage-star" /><BsStarFill className="stage-star" /></span>
+            default:
+                return <></>
+        }
+    }
 
     return (
-        <div className="deck">
+        <div className={`deck ${(stage === 4) ? 'completed' : ''}`}>
             <div className="deck-info-container">
-                <h3 className="deck-name">{name}</h3>
+                <h3 className="deck-name">{name} {stars()}</h3>
                 <Category category={category} size='25px' />
             </div>
             <ProgressBar color={'#8bb174'} height={20} progress={progress * 100 / total} text={`${progress}/${total}`} radius={50} />
@@ -138,7 +160,7 @@ const DeckList = ({ selectedDeckRef }) => {
                     {deckList.map((deck, index) => {
                         return (
                             <div className={`deck-container ${(selectedDeck === deck) ? 'selected' : ''}`} deck={deck} onClick={e => updateSelectedDeck(deck)} key={'div' + deck.name + index}>
-                                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} key={deck.name + index} />
+                                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} />
                             </div>
                         );
                     })}
@@ -151,3 +173,4 @@ const DeckList = ({ selectedDeckRef }) => {
 }
 
 export default DeckList;
+export { Deck };

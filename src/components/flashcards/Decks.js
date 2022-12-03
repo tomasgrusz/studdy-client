@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import DeckList from "./DeckList";
+import DeckList, { Deck } from "./DeckList";
 import ProgressBar from "../misc/ProgressBar";
 import Category from "../misc/Category";
 import FlashcardCreator from "./FlashcardCreator";
@@ -45,13 +45,7 @@ const SelectedDeck = ({ deck, startStudySession }) => {
 
     return (
         <div className="selected-deck-container">
-            <div className="selected-deck-info-wrapper">
-                <div className="deck-info-container">
-                    <h3 className="deck-name">{deck.name}</h3>
-                    <Category category={deck.category} size='25px' />
-                </div>
-                <ProgressBar color={'#8bb174'} height={20} progress={deck.progress * 100 / deck.total} text={`${deck.progress}/${deck.total}`} radius={50} />
-            </div>
+            <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} />
             <div className="selected-deck-session-wrapper">
                 <button className="session-start-button studdy-button" onClick={e => startStudySession(deck)}>Session</button>
                 <button className="studdy-button">+</button>
