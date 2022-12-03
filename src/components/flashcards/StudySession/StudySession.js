@@ -105,7 +105,6 @@ const StudySession = ({ session }) => {
                     <div className='button-container'>
                         <button className='confidence-button studdy-button' onClick={e => continueSession('perfect')}>Perfect</button>
                         <button className='confidence-button studdy-button' onClick={e => continueSession('confident')}>Confident</button>
-                        <button className='confidence-button studdy-button' onClick={e => continueSession('pass')}>Pass</button>
                         <button className='confidence-button studdy-button' onClick={e => continueSession('unsure')}>Unsure</button>
                         <button className='confidence-button studdy-button' onClick={e => continueSession('difficult')}>Difficult</button>
                     </div>
