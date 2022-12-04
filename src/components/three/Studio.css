@@ -1,0 +1,7 @@
+.studio-container {
+  height: 100vh;
+  width: 95%;
+  margin-left: auto;
+  margin-right: 0;
+  background-color: var(--var-bg-color);
+}
