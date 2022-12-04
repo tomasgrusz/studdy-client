@@ -3,14 +3,41 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 import './Login.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProtectedRoute = ({ children }) => {
-    const user = Cookies.get('user');
-    if (!user) {
-        return <Navigate to="/login" replace />;
+
+    const [authResult, setAuthResult] = useState(<div className="loading-wrapper"><div className="lds-hourglass"></div></div>)
+
+    //TODO: remove fixed delay for loading
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
     }
-    return children;
+
+    const online = async () => {
+        const response = await axios.get('http://localhost:3001/online', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
+
+        console.log(response)
+
+        if (response.data.message === 'Success') {
+            //TODO: remove fixed delay for loading
+            await timeout(1100);
+            setAuthResult(children);
+        } else {
+            setAuthResult(<Navigate to="/login" replace />);
+        }
+    }
+
+    useEffect(() => {
+        online()
+    }, [])
+
+    return authResult;
 };
 
 const SignOut = () => {
