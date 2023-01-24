@@ -1,54 +1,122 @@
 /* Global Color Schemes */
-:root {
-  --main-bg-color: #9368b7;
-  --var-bg-color: rgba(237, 246, 249, 0.8);
-  --main-container-color: #edf6f9;
-  --var-container-color: #dbe4ee;
-  --main-text-color: #120d31;
-  --var-text-color: #edf6f9;
+.app.light {
+  ---bg-color: #dcccff;
+  --main-container-color: rgba(255, 255, 255, 0.8);
+  --var-container-color: rgba(255, 255, 255, 0.4);
+  --main-text-color: #241d2e;
+  --var-text-color: black;
 
-  --palette-color-1: #9368b7; /*amethyst*/
-  --palette-color-2: #edf6f9; /*aliceblue*/
-  --palette-color-3: #120d31; /*russianviolet*/
-  --palette-color-4: #98ce00; /*yellowgreen*/
-  --palette-color-5: #8bb174; /*asparagus*/
-  --palette-color-6: #dbe4ee; /* darker aliceblue*/
+  --palette-color-1: aliceblue;
+  --palette-color-2: #dcccff;
+  --palette-color-3: #774fd1;
+  --palette-color-4: #6aa98c;
+  --palette-color-5: #8a5e42;
+  --palette-color-6: rgba(119, 79, 209, 0.25);
 
-  --amethyst-rgba: rgba(147, 104, 183, 1);
+  --hover-color-1: aliceblue;
+  --hover-color-2: #774fd1;
 
-  --aura-color: rgba(237, 246, 249, 0.6);
+  --star-color: #f6aa1c;
+  --danger-color: #d03d3d;
+  --session-color-1: rgba(152, 145, 217, 0.9);
+  --session-color-2: #774fd1;
 
-  --star-color: #f6aa1c; /* bright yellow crayola */
+  --highlight-color: #4cb9a5;
 }
 
-body {
-  background: var(--main-bg-color);
+.app.dark {
+  ---bg-color: #241d2e;
+  --main-container-color: rgba(152, 145, 217, 0.8);
+  --var-container-color: rgba(152, 145, 217, 0.4);
+  --main-text-color: #dcccff;
+  --var-text-color: aliceblue;
+
+  --palette-color-1: aliceblue;
+  --palette-color-2: #241d2e;
+  --palette-color-3: #774fd1;
+  --palette-color-4: #43e2c6;
+  --palette-color-5: #8a5e42;
+  --palette-color-6: rgba(36, 29, 46, 0.25);
+
+  --hover-color-1: #774fd1;
+  --hover-color-2: aliceblue;
+
+  --star-color: #f6aa1c;
+  --danger-color: #d03d3d;
+  --session-color-1: rgba(152, 145, 217, 0.9);
+  --session-color-2: #dcccff;
+
+  --highlight-color: #94fae7;
+}
+
+.app {
+  background-color: var(---bg-color);
+  color: var(--var-text-color);
+
+  display: grid;
+  grid-template-columns: 2fr 20fr 2fr;
+  grid-template-rows: 1fr;
+  column-gap: 1rem;
+
+  transition: all 0.2s ease-in-out;
 }
 
 #three-canvas-container {
   height: 100vh !important;
 }
 
-.content {
-  height: 100%;
-  max-height: 100vh;
-}
-
 /* This section contains global styles for components that appear regularly (like buttons, etc.) */
 .studdy-button {
-  background-color: var(--palette-color-1);
-  border: 2px solid var(--aura-color);
+  background: linear-gradient(90deg, var(--palette-color-3), #d270f4, #4d54eb);
+  background-size: 200% 100%;
+  color: aliceblue;
+  border: 1px solid transparent;
   border-radius: 1.5rem;
-  color: var(--aura-color);
   padding: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
-  transition: all 0.2s ease;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
 }
 
 .studdy-button:hover {
-  cursor: pointer;
-  background-color: var(--palette-color-4);
-  border: 2px solid rgba(255, 255, 255, 1);
-  color: rgba(255, 255, 255, 1);
+  background-position: right;
+  filter: drop-shadow(0px 0px 4px var(--main-text-color));
+}
+
+.studdy-button.var {
+  background: transparent;
+  border: 1px solid var(--main-text-color);
+  color: var(--main-text-color);
+}
+
+.studdy-button.var:hover {
+  background-position: left;
+  border: 1px solid transparent;
+  background: var(--hover-color-2);
+  color: var(--hover-color-1);
+}
+
+.studdy-button.danger {
+  background: transparent;
+  border: 1px solid var(--danger-color);
+  color: var(--danger-color);
+}
+
+.studdy-button.danger:hover {
+  background: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  color: var(--palette-color-1);
+}
+
+.stage-star {
+  color: var(--star-color);
+}
+
+.app.dark .stage-star {
+  filter: drop-shadow(0px 0px 4px var(--star-color));
+}
+
+/* Testing */
+.creator-container.inactive {
+  display: none;
 }

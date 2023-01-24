@@ -1,0 +1,25 @@
+.creator-container.flashcard-container {
+  cursor: auto;
+}
+
+.highlight-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-button {
+  margin-right: auto;
+  font-size: 24px;
+  text-align: center;
+  line-height: 0;
+  color: var(--main-text-color);
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.highlight-button:hover {
+  color: var(--highlight-color);
+  filter: drop-shadow(0px 0px 8px var(--hover-color-2));
+}

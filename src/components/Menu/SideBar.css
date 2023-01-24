@@ -1,0 +1,26 @@
+.sidebar-alt-container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 10fr 1fr;
+  min-width: 9ch;
+  margin-right: 1rem;
+}
+
+.currency-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-text-color);
+  text-decoration: none;
+}
+
+.currency-icon {
+  background-image: url("../Menu/fluorite.png");
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  filter: drop-shadow(0px 0px 6px var(--palette-color-3));
+}

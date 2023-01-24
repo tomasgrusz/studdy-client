@@ -6,6 +6,7 @@ import './StudySession.css'
 
 import { Flashcard } from '../Flashcard';
 import { Deck } from '../DeckList';
+import { CircularProgressBar } from '../../misc/ProgressBar';
 
 const StudySession = ({ session }) => {
 
@@ -67,6 +68,11 @@ const StudySession = ({ session }) => {
             //do something
             console.log(response.data);
             setFlashcard(response.data.flashcard);
+
+            if (response.data.session.progress > studySession.progress) {
+
+            }
+
             setStudySession(response.data.session);
 
         } else if (response.data.message === 'Unauthorized') {
@@ -85,26 +91,34 @@ const StudySession = ({ session }) => {
     }, [])
 
     return (
-        <div className='session-container'>
-            <div className="selected-deck-info-wrapper">
-                <Deck name={studySession.name} category={studySession.category} total={studySession.total} progress={studySession.progress} stage={studySession.stage} />
+        <div className='session-container '>
+            <div className='session-progress'>
+                <CircularProgressBar progress={Math.round(100 * studySession.progress / studySession.total)} size={'100%'} progressColor={'var(--session-color-2)'} outerColor={'rgba(138,106,169,0.5)'} ratio={0.95} customText={' '} />
             </div>
             {(flashcard === 'completed')
-                ? <div className='session-complete-container'>
-                    <label>Congratulations, you have memorized all flashcards in this deck. ❤️</label>
-                    <label>Continue studying other decks or reset session to try again.</label>
-                    <button className='studdy-button' onClick={() => window.location.reload(false)}>Back to Decks</button>
-                </div>
-                : <div className='flashcard-wrapper'>
-                    {(flashcard === null) ? ''
-                        : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} />}
+                ? <div className='session-complete-container flashcard-container'>
+                    <label className='session-complete-label'>Congratulations, you have memorized all flashcards in this deck. ❤️</label>
+                    <label className='session-complete-label'>Continue studying other decks or reset session to try again.</label>
                     <div className='button-container'>
-                        <button className='confidence-button studdy-button' onClick={e => continueSession('perfect')}>Perfect</button>
-                        <button className='confidence-button studdy-button' onClick={e => continueSession('confident')}>Confident</button>
-                        <button className='confidence-button studdy-button' onClick={e => continueSession('unsure')}>Unsure</button>
-                        <button className='confidence-button studdy-button' onClick={e => continueSession('difficult')}>Difficult</button>
+                        <button className='studdy-button' onClick={() => window.location.reload(false)}>Back to Decks</button>
                     </div>
                 </div>
+                :
+                <>
+                    <div className='session-content'>
+                        <div className='flashcard-wrapper'>
+                            {(flashcard === null) ? ''
+                                : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} deckName={studySession.name} deckCategory={studySession.category} />}
+
+                        </div>
+                    </div>
+                    <div className='button-container'>
+                        <button className='confidence-button var-1 studdy-button' onClick={e => continueSession('perfect')}>😎  Perfect</button>
+                        <button className='confidence-button var-2 studdy-button' onClick={e => continueSession('confident')}>😊  Simple</button>
+                        <button className='confidence-button var-3 studdy-button' onClick={e => continueSession('unsure')}>🤨  Unsure</button>
+                        <button className='confidence-button var-4 studdy-button' onClick={e => continueSession('difficult')}>🤯  Hard</button>
+                    </div>
+                </>
             }
         </div>
     )

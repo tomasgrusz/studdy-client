@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EditorState, RichUtils } from 'draft-js';
 import Editor from 'draft-js-plugins-editor'
 import { stateToHTML } from 'draft-js-export-html'
 import Axios from 'axios';
-import { Flashcard } from './Flashcard';
-import { RiEdit2Fill } from 'react-icons/ri'
+import { CgEditMarkup } from 'react-icons/cg'
 
 import 'draft-js/dist/Draft.css';
 import './FlashcardCreator.css';
@@ -13,7 +12,8 @@ import './FlashcardCreator.css';
 const highlightPlugin = {
     customStyleMap: {
         HIGHLIGHT: {
-            background: "#fffe0d"
+            background: "var(--highlight-color)",
+            color: '#241d2e'
         }
     },
     keyBindingFn: e => {
@@ -81,10 +81,10 @@ const FlashcardCreator = ({ deck }) => {
     return (
         <div className='flashcard-creator-container'>
             <div className='highlight-button-wrapper'>
-                <button className="highlight-button" onClick={onHighlight}><RiEdit2Fill />Highlight</button>
+                <span className="highlight-button" onClick={onHighlight}><CgEditMarkup /></span>
+                <input className='studdy-button create-flashcard-button' type='button' value='Submit' onClick={submitFlashcard} />
             </div>
-            <Editor editorState={editorState} onChange={setEditorState} placeholder="Flashcard Content" plugins={[highlightPlugin]} ref={editorRef} />
-            <input className='create-flashcard-button' type='button' value='Submit' onClick={submitFlashcard} />
+            <Editor editorState={editorState} onChange={setEditorState} placeholder="Enter flashcard content..." plugins={[highlightPlugin]} ref={editorRef} />
         </div>
     )
 };

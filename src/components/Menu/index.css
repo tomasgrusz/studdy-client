@@ -1,65 +1,94 @@
 .sidebar-container {
   height: 100vh;
-  float: left;
-  min-width: 5%;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(46, 20, 0, 0.2);
+  margin-left: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 9fr 1fr;
   align-items: center;
-  justify-content: center;
-  justify-items: center;
-  text-align: center;
 }
 
 .sidebar-header {
-  flex: 1;
-  margin-top: 2rem;
-  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
 }
 
-.sidebar {
-  padding: 1rem 0;
-  flex: 8;
+.user-name {
+  font-size: larger;
 }
 
 .sidebar-list {
-  column-gap: 1rem;
+  row-gap: 2rem;
   margin: 1rem 0;
   padding: 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  list-style: none;
+  align-items: center;
 }
 
 .sidebar-item {
-  list-style: none;
-  margin-bottom: 2rem;
-  flex: 1;
+  color: var(--main-text-color);
+  text-align: center;
+  display: block;
+  z-index: 0;
 }
 
-.icon {
-  display: block;
-  font-size: 1.5rem;
-  width: 100%;
-  color: var(--aura-color);
-  margin: 0.25rem 0;
-  transition: all 0.2s ease;
+.sidebar-item.alt {
+  margin-bottom: 20vh;
+}
+
+.sidebar-item .icon {
+  font-size: 24px;
+  padding-right: 0.3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .sidebar-item a {
-  display: block;
+  display: flex;
+  align-items: center;
+  color: var(--main-text-color);
   text-decoration: none;
-  color: transparent;
-  text-align: center;
-  transition: all 0.2s ease;
-  font-size: 14px;
 }
 
-.sidebar-item:hover a,
-.sidebar-item:hover .icon {
-  color: var(--var-text-color);
-  filter: drop-shadow(0px 0px 5px var(--aura-color));
+.sidebar-item a::before {
+  content: "";
+  border-radius: 0 1rem 1rem 0;
+  background-color: var(--hover-color-1);
+  position: absolute;
+  z-index: -1;
+  width: calc(100vw / 12);
+  min-width: calc(1rem + 24px + 8ch);
+  height: 40px;
+  left: 0;
+  display: block;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease-in-out;
 }
 
-.alt {
-  margin-bottom: 20vh;
+.sidebar-item:hover a::before,
+.sidebar-item.active a::before {
+  transform: translateX(0%);
+}
+
+.sidebar-footer {
+  display: flex;
+  /* margin-left: 0.8rem; */
+  justify-content: space-around;
+}
+
+.sidebar-footer .icon {
+  padding: 0.5rem;
+  font-size: 24px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border-radius: 50%;
+  color: var(--main-text-color);
+}
+
+.sidebar-footer .icon:hover {
+  background-color: var(--hover-color-1);
 }

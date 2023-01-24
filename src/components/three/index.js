@@ -48,13 +48,13 @@ const Model = () => {
     )
 }
 
-const Three = () => {
+const Three = (width, height) => {
     return (
-        <Canvas id="three-canvas-container" shadows>
+        <Canvas id="three-canvas-container" shadows style={{ width: width, height: height }}>
             <Suspense fallback={<></>}>
                 <Model />
             </Suspense>
-        </Canvas>
+        </Canvas >
     );
 }
 

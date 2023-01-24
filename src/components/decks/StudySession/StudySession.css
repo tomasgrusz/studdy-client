@@ -1,0 +1,146 @@
+.session-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.flashcard-wrapper {
+}
+
+.flashcard-wrapper > .flashcard-container {
+  width: 50rem;
+  height: 15rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 50rem;
+  position: absolute;
+  z-index: 2;
+  top: 70%;
+}
+
+.session-complete-label {
+  display: block;
+}
+
+.session-complete-container .button-container {
+  justify-content: center;
+}
+
+.confidence-button {
+  width: 15vh;
+  padding: 1vh !important;
+  border: 1px solid transparent;
+}
+
+.session-complete-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  z-index: 2;
+  width: 80vh;
+  font-size: 2vh;
+  height: 30vh;
+  background-color: var(--session-color-1);
+  color: black;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.session-content {
+  width: 95vh;
+  height: 95vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1;
+}
+
+.session-progress {
+  position: absolute;
+  z-index: 0;
+
+  width: 95vh;
+  height: 95vh;
+}
+
+.app.light .session-progress .inner-circle {
+  background-image: url("../../../assets/session-background-light.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.25s ease-in-out;
+}
+
+.app.dark .session-progress .inner-circle {
+  background-image: url("../../../assets/session-background-dark.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.25s ease-in-out;
+}
+
+.session-progress .inner-circle.var-2 {
+  display: none !important;
+}
+
+.session-progress .circular-progress-bar {
+  stroke-dasharray: 70;
+}
+
+.flashcard-wrapper > .flashcard-container {
+  font-size: 2vh;
+  height: 30vh;
+  background-color: var(--session-color-1);
+  color: black;
+}
+
+.flashcard-wrapper > .flashcard-container,
+.button-container {
+  width: 75vh;
+}
+
+.button-container > .confidence-button {
+  font-size: 1.8vh;
+}
+
+.confidence-button.var-1 {
+  background: #72b495;
+}
+
+.confidence-button.var-2 {
+  background: #f6aa1c;
+}
+
+.confidence-button.var-3 {
+  background: #ff9059;
+}
+
+.confidence-button.var-4 {
+  background: #e36861;
+}
+
+.confidence-button.var-1:hover {
+  filter: drop-shadow(0px 0px 10px #72b495);
+}
+
+.confidence-button.var-2:hover {
+  filter: drop-shadow(0px 0px 10px #f6aa1c);
+}
+
+.confidence-button.var-3:hover {
+  filter: drop-shadow(0px 0px 10px #ff9059);
+}
+
+.confidence-button.var-4:hover {
+  filter: drop-shadow(0px 0px 10px #e36861);
+}
+
+.confidence-button:hover {
+  border: 1px solid aliceblue;
+}
