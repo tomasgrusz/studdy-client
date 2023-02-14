@@ -4,15 +4,13 @@ import axios from 'axios';
 
 import './Login.css'
 import { useEffect, useState } from "react";
+import Studio from "../three/Studio";
+import Three from "../three";
+import Logo from "../three/Logo";
 
 const ProtectedRoute = ({ children }) => {
 
-    const [authResult, setAuthResult] = useState(<div className="loading-wrapper"><div className="lds-hourglass"></div></div>)
-
-    //TODO: remove fixed delay for loading
-    function timeout(delay) {
-        return new Promise(res => setTimeout(res, delay));
-    }
+    const [authResult, setAuthResult] = useState(true)
 
     const online = async () => {
         const response = await axios.get('http://localhost:3001/online', {
@@ -22,14 +20,8 @@ const ProtectedRoute = ({ children }) => {
             withCredentials: true
         })
 
-        console.log(response)
-
-        if (response.data.message === 'Success') {
-            //TODO: remove fixed delay for loading
-            await timeout(1100);
-            setAuthResult(children);
-        } else {
-            setAuthResult(<Navigate to="/login" replace />);
+        if (response.data.message !== 'Success') {
+            setAuthResult(false)
         }
     }
 
@@ -37,29 +29,33 @@ const ProtectedRoute = ({ children }) => {
         online()
     }, [])
 
-    return authResult;
+    return authResult ? children : <Navigate to="/login" replace />;
 };
 
 const SignOut = () => {
 
+    const [loggedOut, setLoggedOut] = useState(false)
 
-    axios.post('http://localhost:3001/logout', {
-    }, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        withCredentials: true
-    }).then(response => {
-        if (response.data.message === 'logged out') {
-            Cookies.remove('user')
-            return <Navigate to="/login" replace />
-        } else {
-            return <Navigate to="/" replace />
-        }
-    })
+    const logout = () => {
+        axios.post('http://localhost:3001/logout', {
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        }).then(response => {
+            if (response.data.message === 'logged out') {
+                Cookies.remove('user');
+                setLoggedOut(true);
+            }
+        })
+    }
 
+    useEffect(() => {
+        logout()
+    }, [])
 
-    return (<>You have successfully logged out!</>)
+    return loggedOut ? <Navigate to="/login" replace /> : <>Signing Out</>
 }
 
 const Login = () => {
@@ -69,7 +65,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const userLogIn = async e => {
-        e.preventDefault();
+        e.preventDefault()
 
         const response = await axios.post('http://localhost:3001/login', {
             username: username,
@@ -83,17 +79,24 @@ const Login = () => {
         if (response.data.message === 'logged in') {
             alert(`Successfully logged in as ${response.data.user}!`)
             Cookies.set('user', true)
-            navigate('/');
+            navigate('/', { replace: true });
         }
     }
 
     return (
-        <div className="login-div">
-            <form className="login-form" onSubmit={e => userLogIn(e)}>
-                <input className="username-input" type='text' placeholder="Username" value={username} onChange={e => setUsername(e.target.value)}></input>
-                <input className="password-input" type='password' placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}></input>
-                <input className="login-button" type='submit' value='Log In'></input>
-            </form>
+        <div className="login-container">
+            <div className="foreground">
+                <h1 className="title">Sign In</h1>
+                <form className="login-form" onSubmit={e => userLogIn(e)}>
+                    <input className="username-input" type='text' placeholder="Username" value={username} onChange={e => setUsername(e.target.value)}></input>
+                    <input className="password-input" type='password' placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}></input>
+                    <label>Forgot password?</label>
+                    <input className="login-button studdy-button" type='submit' value='Continue'></input>
+                </form>
+            </div>
+            <div className="studio-container-var">
+                <Logo />
+            </div>
         </div>
     )
 }

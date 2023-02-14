@@ -1,17 +1,40 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import './StudySession.css'
 
 import { Flashcard } from '../Flashcard';
-import { Deck } from '../DeckList';
+import { UserContext } from '../../account/UserInfo';
 import { CircularProgressBar } from '../../misc/ProgressBar';
+import useKeyPress from '../../misc/useKeyPress';
 
 const StudySession = ({ session }) => {
 
+    const press1 = useKeyPress('1');
+    const press2 = useKeyPress('2');
+    const press3 = useKeyPress('3');
+    const press4 = useKeyPress('4');
+
+    useEffect(() => {
+        async function handlePress() {
+            if (press1) {
+                await continueSession('perfect')
+            } else if (press2) {
+                await continueSession('confident')
+            } else if (press3) {
+                await continueSession('unsure')
+            } else if (press4) {
+                await continueSession('difficult')
+            }
+        }
+        handlePress()
+    }, [press1, press2, press3, press4])
+
     const [studySession, setStudySession] = useState(session)
     const [flashcard, setFlashcard] = useState(null)
+
+    const { user, setUser } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -46,9 +69,6 @@ const StudySession = ({ session }) => {
     }
 
     const continueSession = async (confidence) => {
-        console.log(confidence)
-        console.log(flashcard)
-        console.log(studySession)
 
         const response = await Axios.post('http://localhost:3001/studySession', {
             session: studySession,
@@ -65,13 +85,13 @@ const StudySession = ({ session }) => {
         })
         if (response.data.message === 'Success') {
 
-            //do something
-            console.log(response.data);
             setFlashcard(response.data.flashcard);
 
-            if (response.data.session.progress > studySession.progress) {
-
-            }
+            setUser({
+                username: user.username,
+                currency: response.data.currency,
+                xp: response.data.xp
+            })
 
             setStudySession(response.data.session);
 
@@ -88,7 +108,7 @@ const StudySession = ({ session }) => {
 
     useEffect(() => {
         startSession()
-    }, [])
+    }, []);
 
     return (
         <div className='session-container '>
@@ -108,7 +128,7 @@ const StudySession = ({ session }) => {
                     <div className='session-content'>
                         <div className='flashcard-wrapper'>
                             {(flashcard === null) ? ''
-                                : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} deckName={studySession.name} deckCategory={studySession.category} />}
+                                : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} deckName={studySession.name} deckCategory={studySession.category} stage={flashcard.stage} />}
 
                         </div>
                     </div>

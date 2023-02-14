@@ -36,12 +36,114 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
         }
     }
 
+    const [deckName, setDeckName] = useState(name)
+
+    const deckOptions = async (option) => {
+
+        try {
+
+            if (option === 'rename') {
+
+                if (deckName === name) {
+                    alert('Deck name has not changed, please try again.')
+                    return
+                }
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'rename',
+                    name: deckName
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert('Successfully renamed deck.')
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+
+            } else if (option === 'pause') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'pause'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully paused deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else if (option === 'reset') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'reset'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully reset progress of deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else if (option === 'delete') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'delete'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully deleted deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else {
+                alert('Unexpected error occured, please contact us.')
+            }
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
     return (
         <div className={`deck ${(stage === 4) ? 'golden' : ''}`}>
             <div className="deck-stars">{stars()}</div>
             <div className="deck-info-container">
                 <span className="deck-category">
-                    <h3 className="deck-name">{name}</h3>
+                    <input type="text" className="deck-name-input deck-name" value={deckName} onChange={e => setDeckName(e.currentTarget.value)}></input>
                     <Category category={category} size={'25px'} />
                 </span>
                 <label className="deck-description">Next session on 22/01/2023</label>
@@ -50,10 +152,10 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
                 <CircularProgressBar progress={Math.round(100 * progress / total)} size={'120px'} progressColor={'var(--palette-color-4)'} progressColor2={'var(--palette-color-4)'} progressColor3={'var(--palette-color-3)'} outerColor={'var(--palette-color-6)'} innerColor1={'var(--palette-color-2)'} innerColor2={'var(--var-container-color)'} textColor={'var(--main-text-color)'} fontSize={'24px'} ratio={0.8} golden={(stage === 4)} />
                 <FlashcardStarStats flashcardStats={[flashcardStats.stageZero, flashcardStats.stageOne, flashcardStats.stageTwo, flashcardStats.stageThree, flashcardStats.stageFour]} />
                 <div className="deck-options-container">
-                    <button className="deck-option studdy-button var">Rename</button>
-                    <button className="deck-option studdy-button var">Pause</button>
-                    <button className="deck-option studdy-button var">Reset</button>
-                    <button className="deck-option studdy-button var danger">Delete</button>
+                    <button className="deck-option studdy-button var" onClick={e => deckOptions('rename')}>Rename</button>
+                    <button className="deck-option studdy-button var" onClick={e => { if (window.confirm(`Are you sure you want to pause all flashcards in deck ${name}?`)) { deckOptions('pause') } }}>Pause</button>
+                    <button className="deck-option studdy-button var" onClick={e => { if (window.confirm(`Are you sure you want to reset all flashcards' progress in deck ${name}?\nYour profile stats and badges will not be affected.\nThis action cannot be undone.`)) { deckOptions('reset') } }}>Reset</button>
+                    <button className="deck-option studdy-button var danger" onClick={e => { if (window.confirm(`Are you sure you want to delete deck ${name}?\nThis action cannot be undone.`)) { deckOptions('delete') } }}>Delete</button>
                 </div>
             </div>
             <div className="deck-session-start">
@@ -118,7 +220,7 @@ const SelectedDeck = ({ deck, setStudySession }) => {
             stageCategoryFilter.map((stage, index) => {
                 if (stage) {
                     flashcards.map(flashcard => {
-                        if (flashcard.stage === index) {
+                        if (flashcard.stage === index || (flashcard.stage === index - 1 && flashcard.completed)) {
                             newList.push(flashcard)
                         }
                     })
@@ -159,7 +261,7 @@ const SelectedDeck = ({ deck, setStudySession }) => {
                         <FlashcardCreator deck={deck} />
                     </div>
                     {filteredFlashcards.map(flashcard => {
-                        return <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} stage={flashcard.stage} completed={flashcard.completed} stageDate={flashcard.stageDate} />
+                        return <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} stage={flashcard.stage} completed={flashcard.completed} stageDate={flashcard.stageDate} paused={flashcard.paused} />
                     })}
                 </div>
             </div>

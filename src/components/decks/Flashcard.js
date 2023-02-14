@@ -14,11 +14,23 @@ const Flashcard = (props) => {
 
     const [flipped, setFlipped] = useState(false)
 
-    const stars = (<>
-        {Array.from({ length: props.stage - 1 }, (_, i) => <BsStarFill className="stage-star" />)}
-        {(props.stage === 0 ? <BsStar className="stage-star" /> : <></>)}
-        {(props.stage < 4 && props.stage > 0) ? <BsStarFill className="stage-star" /> : <></>}
-    </>)
+    const stars = () => {
+
+        if (props.stage === 4) {
+            return (<>
+                <BsStarFill className="stage-star" />
+                <BsStarFill className="stage-star" />
+                <BsStarFill className="stage-star" />
+            </>)
+        }
+
+        return (<>
+            {Array.from({ length: props.stage }, (_, i) => <BsStarFill className="stage-star" />)}
+            {(props.completed ? <BsStarFill className="stage-star" /> : <BsStar className="stage-star" />)}
+            {(props.completed ? <> + <BsStar className="stage-star" /> on {new Date(props.stageDate).toLocaleDateString("en-UK")}</> : <></>)}
+            {(props.paused) ? <> Paused</> : <></>}
+        </>)
+    }
 
     const [flashcardOptions, setFlashcardOptions] = useState(false)
 
@@ -37,7 +49,7 @@ const Flashcard = (props) => {
     return (
         <div className={`flashcard-container ${(props.stage === 4) ? 'golden' : ''}`}>
             <div className='flashcard-top'>
-                <div className='flashcard-stars-container'>{stars}</div>
+                <div className={`flashcard-stars-container ${(props.stage === 4) ? 'golden' : ''}`}>{stars()}</div>
                 <span className={`icon ${props.deckName ? 'session' : ''}`} ref={setReferenceElement} onClick={e => setFlashcardOptions(!flashcardOptions)}><BsThreeDotsVertical /></span>
                 {!flashcardOptions ? '' :
                     <Portal >
@@ -58,7 +70,7 @@ const Flashcard = (props) => {
                 : <></>}
             <div className='flashcard-bottom' onClick={e => setFlipped(!flipped)}>
                 {flipped
-                    ? <div className='flashcard-back'>{props.back}</div>
+                    ? <div className='flashcard-back' dangerouslySetInnerHTML={{ __html: props.back }}></div>
                     : <div className='flashcard-front' dangerouslySetInnerHTML={{ __html: props.front }}></div>
                 }
             </div>

@@ -68,9 +68,12 @@ const CircularProgressBar = ({ progress, size, progressColor, progressColor2, pr
     useEffect(() => {
         async function progressAnimation() {
             const offset = Math.abs(Math.round(progress) - Math.round(currentProgress))
-            if (currentProgress < progress) {
+            if (currentProgress <= progress && offset) {
                 await new Promise(res => setTimeout(res, 250 / offset / 10));
                 setCurrentProgress(currentProgress + 0.1)
+            } else if (currentProgress > progress && offset) {
+                await new Promise(res => setTimeout(res, 250 / offset / 10));
+                setCurrentProgress(currentProgress - 0.1)
             }
         }
         progressAnimation()
@@ -87,7 +90,7 @@ const CircularProgressBar = ({ progress, size, progressColor, progressColor2, pr
         height: `${size}`,
         width: `${size}`,
         borderRadius: '50%',
-        background: `conic-gradient(${progressColor} 0deg, ${progressColor3 && (roundCheck(currentProgress, false) >= 50) ? `${progressColor3} ${360 * roundCheck(currentProgress, false) / 200}deg,` : ''} ${progressColor2 ? progressColor2 : progressColor} ${360 * roundCheck(currentProgress, false) / 100}deg, ${outerColor} 0deg)`,
+        background: `conic-gradient(${progressColor} 0deg, ${progressColor3 && (roundCheck(currentProgress, false) >= 50) ? `${progressColor3} ${360 * roundCheck(currentProgress, false) / 200}deg,` : ''} ${progressColor2 ? progressColor2 : progressColor} ${360 * roundCheck(currentProgress, false) / 100 + (progress > 99 ? 1.5 : 0)}deg, ${outerColor} 0deg)`,
         color: textColor,
         fontSize: fontSize,
     }
@@ -129,7 +132,7 @@ const CircularProgressBar = ({ progress, size, progressColor, progressColor2, pr
     return (
         <div className='circular-progress-bar' style={{ ...CircularProgressBarStyle, ...(golden ? GoldenStyle : {}) }}>
             <span className='inner-circle var-1' style={InnerCircleStyle}>
-                <span className='inner-circle var-2' style={InnerCircleLayerStyle}>{golden ? <BsStarFill style={GoldenStar} /> : customText ? customText : `${roundCheck(currentProgress, true)}%`}
+                <span className='inner-circle var-2' style={InnerCircleLayerStyle}>{golden ? <BsStarFill style={GoldenStar} /> : customText !== undefined ? customText : `${roundCheck(currentProgress, true)}%`}
                 </span>
             </span>
         </div>

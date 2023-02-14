@@ -36,12 +36,85 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
     }
 
     const [deckStat, setDeckStat] = useState(false)
-
     const [deckOptions, setDeckOptions] = useState(false)
 
     const [referenceElement, setReferenceElement] = React.useState(null);
     const [popperElement, setPopperElement] = React.useState(null);
     const { styles, attributes } = usePopper(referenceElement, popperElement, { placement: "right-start" });
+
+    const deckOptionsFunction = async (option) => {
+
+        try {
+
+            if (option === 'pause') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'pause'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully paused deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else if (option === 'reset') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'reset'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully reset progress of deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else if (option === 'delete') {
+
+                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                    deck: deckRef,
+                    option: 'delete'
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
+
+                if (response && response.data.message === 'Success') {
+
+                    alert(`Successfully deleted deck ${name}.`)
+                } else {
+
+                    alert('An error occured, please try again or contact us.')
+                }
+
+            } else {
+                alert('Unexpected error occured, please contact us.')
+            }
+
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
 
     useEffect(() => {
         if (deckOptions) {
@@ -75,9 +148,9 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
                         <Portal >
                             <div className="options-container" ref={setPopperElement} style={styles.popper} {...attributes.popper} >
                                 <span onClick={e => setSelectedDeck(deckRef)}><MdOutlineFeaturedPlayList className="icon" />Flashcards</span>
-                                <span><MdPauseCircleOutline className="icon" />Pause Deck</span>
-                                <span><MdAutorenew className="icon" />Reset Progress</span>
-                                <span className="var danger"><MdDeleteOutline className="icon" />Delete Deck</span>
+                                <span onClick={e => { if (window.confirm(`Are you sure you want to pause all flashcards in deck ${name}?`)) { deckOptionsFunction('pause') } }}><MdPauseCircleOutline className="icon" />Pause Deck</span>
+                                <span onClick={e => { if (window.confirm(`Are you sure you want to reset all flashcards' progress in deck ${name}?\nYour profile stats and badges will not be affected.\nThis action cannot be undone.`)) { deckOptionsFunction('reset') } }}><MdAutorenew className="icon" />Reset Progress</span>
+                                <span className="var danger" onClick={e => { if (window.confirm(`Are you sure you want to delete deck ${name}?\nThis action cannot be undone.`)) { deckOptionsFunction('delete') } }}><MdDeleteOutline className="icon" />Delete Deck</span>
                             </div>
                         </Portal>
                     }

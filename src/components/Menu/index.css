@@ -5,6 +5,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: 2fr 9fr 1fr;
   align-items: center;
+  z-index: 10;
 }
 
 .sidebar-header {

@@ -1,52 +1,65 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.foreground {
+  z-index: 10;
+  padding: 0.5rem 1rem 1rem 1rem;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  /* */
+  background: var(--var-container-color);
+  box-shadow: 0 0.5rem 1rem 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 .login-form {
-  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .username-input,
-.password-input,
-.login-button {
-  display: block;
-  margin: 0 auto;
-  font-size: 20px;
-  margin-top: 1rem;
+.password-input {
+  border-radius: 10px;
+  outline: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  /* */
+  background-color: var(--var-container-color);
+  color: var(--main-text-color);
+  box-shadow: 0 0.5rem 1rem 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.loading-wrapper {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: var(--var-bg-color);
+.studio-container-var {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
 }
 
-/* This is an adapted code from https://loading.io/css/ for an hourglass loader */
-.lds-hourglass {
-  display: inline-block;
-  margin: 0 auto;
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--var-text-color);
+  opacity: 0.8; /* Firefox */
 }
-.lds-hourglass:after {
-  content: " ";
-  display: block;
-  border-radius: 50%;
-  width: 0;
-  height: 0;
-  margin: 8px;
-  box-sizing: border-box;
-  border: 32px solid var(--palette-color-1);
-  border-color: var(--palette-color-1) transparent var(--palette-color-1)
-    transparent;
-  animation: lds-hourglass 1.2s infinite;
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--var-text-color);
 }
-@keyframes lds-hourglass {
-  0% {
-    transform: rotate(0);
-    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  }
-  50% {
-    transform: rotate(900deg);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  100% {
-    transform: rotate(1800deg);
-  }
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--var-text-color);
 }
-/* This is a copied code from https://loading.io/css/ for a hourglass loader */

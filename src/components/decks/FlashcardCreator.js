@@ -6,6 +6,8 @@ import { stateToHTML } from 'draft-js-export-html'
 import Axios from 'axios';
 import { CgEditMarkup } from 'react-icons/cg'
 
+import sanitizeHtml from 'sanitize-html';
+
 import 'draft-js/dist/Draft.css';
 import './FlashcardCreator.css';
 
@@ -41,8 +43,7 @@ const FlashcardCreator = ({ deck }) => {
         event.preventDefault();
 
         //convert content from editor to html
-        const flashcard = stateToHTML(editorState.getCurrentContent(), options)
-        console.log(flashcard)
+        const flashcard = sanitizeHtml(stateToHTML(editorState.getCurrentContent(), options))
 
         const response = await Axios.post('http://localhost:3001/createFlashcard', {
             deck: deck,
