@@ -2,8 +2,9 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import { useCountUp } from 'react-countup';
 import './SideBar.css'
 import { UserContext } from '../account/UserInfo';
+import { AmbientSound, playSFX } from '../misc/Sound';
 
-const SideBar = () => {
+const SideBar = ({ mode, sound }) => {
 
     const { user } = useContext(UserContext);
 
@@ -16,7 +17,7 @@ const SideBar = () => {
         delay: 0,
         duration: 2,
         startOnMount: true,
-        onUpdate: () => start(),
+        onUpdate: () => { start(); playSFX('intelligem'); },
         onEnd: () => setUserCurrency(user.currency),
     });
 
@@ -27,6 +28,7 @@ const SideBar = () => {
 
         useEffect(() => {
             const f1 = async () => {
+                playSFX('levelUp')
                 await new Promise(res => setTimeout(res, 10000));
                 await setLvlUpPopup(false)
             }
@@ -68,7 +70,6 @@ const SideBar = () => {
                 <span className='currency-icon'></span>
                 <div ref={countUpRef} />
             </div>
-            <></>
             <div className="activity-container">
                 {lvlUpPopup ? <LevelUpPopup setLvlUpPopup={setLvlUpPopup} /> : <></>}
                 {sidebarPopups.map((value, i) => {
@@ -82,6 +83,7 @@ const SideBar = () => {
                         </div> : <></>
                 })}
             </div>
+            <AmbientSound sound={sound} />
         </div>
     )
 }

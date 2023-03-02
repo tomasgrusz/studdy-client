@@ -8,6 +8,7 @@ import { Flashcard } from '../Flashcard';
 import { UserContext } from '../../account/UserInfo';
 import { CircularProgressBar } from '../../misc/ProgressBar';
 import useKeyPress from '../../misc/useKeyPress';
+import { playSFX } from '../../misc/Sound';
 
 const StudySession = ({ session }) => {
 
@@ -33,6 +34,7 @@ const StudySession = ({ session }) => {
 
     const [studySession, setStudySession] = useState(session)
     const [flashcard, setFlashcard] = useState(null)
+    const [flipCheck, setFlipCheck] = useState(false)
 
     const { user, setUser } = useContext(UserContext);
 
@@ -70,6 +72,11 @@ const StudySession = ({ session }) => {
 
     const continueSession = async (confidence) => {
 
+        if (!flipCheck) {
+            alert('Flip flashcard before continuing!')
+            return
+        }
+
         const response = await Axios.post('http://localhost:3001/studySession', {
             session: studySession,
             options: {
@@ -85,6 +92,8 @@ const StudySession = ({ session }) => {
         })
         if (response.data.message === 'Success') {
 
+            playSFX('pageFlip')
+
             setFlashcard(response.data.flashcard);
 
             setUser({
@@ -94,6 +103,7 @@ const StudySession = ({ session }) => {
             })
 
             setStudySession(response.data.session);
+            setFlipCheck(false);
 
         } else if (response.data.message === 'Unauthorized') {
             alert('Your session is outdated, you will be redirected to the login page to sign in again.')
@@ -109,6 +119,10 @@ const StudySession = ({ session }) => {
     useEffect(() => {
         startSession()
     }, []);
+
+    useEffect(() => {
+        playSFX('correct')
+    }, [studySession.progress])
 
     return (
         <div className='session-container '>
@@ -128,7 +142,7 @@ const StudySession = ({ session }) => {
                     <div className='session-content'>
                         <div className='flashcard-wrapper'>
                             {(flashcard === null) ? ''
-                                : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} deckName={studySession.name} deckCategory={studySession.category} stage={flashcard.stage} />}
+                                : <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} id={flashcard._id} deckName={studySession.name} deckCategory={studySession.category} stage={flashcard.stage} deck={session} setFlipCheck={setFlipCheck} flipCheck={flipCheck} />}
 
                         </div>
                     </div>

@@ -12,25 +12,32 @@ import { ProtectedRoute, Login, SignOut } from './components/account/Login';
 
 import './App.css'
 import { Home } from './components/home/Home';
+import { Settings } from './components/account/Settings';
+import { CreateAccount } from './components/account/CreateAccount';
 
 const App = () => {
 
   const [mode, setMode] = useState(localStorage.getItem('darkMode') ? localStorage.getItem('darkMode') : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const [sound, setSound] = useState(localStorage.getItem('sound') ? localStorage.getItem('sound') === "true" : true);
   const [user, setUser] = useState({});
 
   useEffect(() => {
     localStorage.setItem('darkMode', mode)
   }, [mode])
 
+  useEffect(() => {
+    localStorage.setItem('sound', sound)
+  }, [sound])
+
   const layout = (children, login) => {
 
     return (
       <>
-        <Menu className='menu' setMode={setMode} mode={mode} login={login} />
+        <Menu className='menu' setMode={setMode} setSound={setSound} mode={mode} sound={sound} login={login} />
         <div className='content'>
           {children}
         </div>
-        {login ? <SideBar /> : <></>}
+        {login ? <SideBar mode={mode} sound={sound} /> : <></>}
       </>
     )
   }
@@ -41,11 +48,12 @@ const App = () => {
         <div className={`app ${mode}`}>
           <Routes>
             <Route path='/login' element={layout(<Login />, false)} />
+            <Route path='/join' element={layout(<CreateAccount />, false)} />
             <Route path='/' element={<ProtectedRoute>{layout(<Home />, true)}</ProtectedRoute>}></Route>
             <Route path='/profile' element={<ProtectedRoute>{layout(<Profile />, true)}</ProtectedRoute>}></Route>
             <Route path='/studio' element={<ProtectedRoute>{layout(<Studio />, true)}</ProtectedRoute>}></Route>
             <Route path='/flashcards' element={<ProtectedRoute>{layout(<Decks />, true)}</ProtectedRoute>}></Route>
-            <Route path='/settings' element={<ProtectedRoute>{layout(<></>, true)}</ProtectedRoute>}></Route>
+            <Route path='/settings' element={<ProtectedRoute>{layout(<Settings />, true)}</ProtectedRoute>}></Route>
             <Route path='/sign-out' element={<ProtectedRoute>{layout(<SignOut />, true)}</ProtectedRoute>}></Route>
           </Routes>
         </div>

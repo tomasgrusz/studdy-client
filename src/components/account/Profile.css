@@ -21,7 +21,7 @@
 
 .profile-info-container.main {
   display: grid;
-  grid-template-rows: 4fr 2fr 2fr 2fr;
+  grid-template-rows: 4fr 2fr 3fr 1fr;
   row-gap: 2rem;
 }
 

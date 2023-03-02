@@ -13,7 +13,7 @@ import StudySession from "./StudySession/StudySession";
 
 import './Decks.css'
 
-const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudySession, deckRef }) => {
+const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudySession, deckRef, description }) => {
 
     const stars = () => {
         switch (stage) {
@@ -146,7 +146,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
                     <input type="text" className="deck-name-input deck-name" value={deckName} onChange={e => setDeckName(e.currentTarget.value)}></input>
                     <Category category={category} size={'25px'} />
                 </span>
-                <label className="deck-description">Next session on 22/01/2023</label>
+                <label className="deck-description">{description}</label>
             </div>
             <div className="deck-progress deck-var">
                 <CircularProgressBar progress={Math.round(100 * progress / total)} size={'120px'} progressColor={'var(--palette-color-4)'} progressColor2={'var(--palette-color-4)'} progressColor3={'var(--palette-color-3)'} outerColor={'var(--palette-color-6)'} innerColor1={'var(--palette-color-2)'} innerColor2={'var(--var-container-color)'} textColor={'var(--main-text-color)'} fontSize={'24px'} ratio={0.8} golden={(stage === 4)} />
@@ -242,7 +242,7 @@ const SelectedDeck = ({ deck, setStudySession }) => {
     return (
         <div className="selected-deck-container">
             <div className="selected-deck">
-                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} flashcardStats={deck.flashcardStats} setStudySession={setStudySession} deckRef={deck} />
+                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} flashcardStats={deck.flashcardStats} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
             </div>
             <div className="flashcardlist-container">
                 <div className="deck-search-container">
@@ -261,7 +261,7 @@ const SelectedDeck = ({ deck, setStudySession }) => {
                         <FlashcardCreator deck={deck} />
                     </div>
                     {filteredFlashcards.map(flashcard => {
-                        return <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} stage={flashcard.stage} completed={flashcard.completed} stageDate={flashcard.stageDate} paused={flashcard.paused} />
+                        return <Flashcard front={flashcard.front} back={flashcard.back} key={flashcard._id} id={flashcard._id} stage={flashcard.stage} completed={flashcard.completed} stageDate={flashcard.stageDate} paused={flashcard.paused} deck={deck} />
                     })}
                 </div>
             </div>

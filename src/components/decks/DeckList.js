@@ -12,7 +12,7 @@ import './DeckList.css'
 import { Portal } from "../misc/Portal";
 import { usePopper } from 'react-popper';
 
-const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, deckRef }) => {
+const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, deckRef, description }) => {
 
     const stars = () => {
         switch (stage) {
@@ -132,7 +132,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
                     <h3 className="deck-name">{name}</h3>
                     <Category category={category} size={'25px'} />
                 </span>
-                <label className="deck-description">Next session on 22/01/2023</label>
+                <label className="deck-description">{description}</label>
             </div>
             <div className="deck-progress" onClick={e => setDeckStat(!deckStat)}>
                 {!deckStat
@@ -373,7 +373,7 @@ const DeckList = ({ setSelectedDeck, setStudySession }) => {
                         {sortDeckList(filteredDeckList).map((deck, index) => {
                             return (
                                 <div className='deck-container' deck={deck} key={'div' + deck.name + index}>
-                                    <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} />
+                                    <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
                                 </div>
                             );
                         })}

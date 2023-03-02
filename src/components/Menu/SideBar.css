@@ -95,3 +95,11 @@
   z-index: 10;
   animation: LevelUpAnimation 5s linear forwards;
 }
+
+.ambient-sound-container .icon {
+  transition: all 0.25s ease;
+}
+
+.ambient-sound-container .icon:hover {
+  color: var(--hover-color-1);
+}

@@ -75,11 +75,11 @@ const Home = () => {
                         <div className='recent-decks'>
                             {recentDeck !== null ? <div className='deck-container' deck={recentDeck}>
                                 <label className='recent-decks-label'>MOST RECENT SESSION</label>
-                                <Deck name={recentDeck.name} category={recentDeck.category} total={recentDeck.total} progress={recentDeck.progress} stage={recentDeck.stage} flashcardStats={recentDeck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={recentDeck} />
+                                <Deck name={recentDeck.name} category={recentDeck.category} total={recentDeck.total} progress={recentDeck.progress} stage={recentDeck.stage} flashcardStats={recentDeck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={recentDeck} description={recentDeck.description} />
                             </div> : <>No sessions found.</>}
                             {dailyDecks.map(deck => <div className='deck-container' deck={deck}>
                                 <label className='recent-decks-label'>SUGGESTION</label>
-                                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} />
+                                <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
                             </div>)}
                         </div>
                     </div>

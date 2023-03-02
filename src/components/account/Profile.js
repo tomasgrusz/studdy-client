@@ -73,7 +73,7 @@ const Profile = () => {
                     </div>
                     <div className='xp-progress-container sub'>
                         <ProgressBar color={'#4D54EB'} height={20} progress={levelProgress} radius={50} />
-                        <label className='xp-progress'>{user.xp - levelXP} / {newLevel - user.xp}</label>
+                        <label className='xp-progress'>{user.xp - levelXP} / {newLevel - levelXP}</label>
                     </div>
                 </div>
                 <div className='about-me-container sub'>

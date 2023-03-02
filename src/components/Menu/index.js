@@ -8,9 +8,7 @@ import { UserInfo } from '../account/UserInfo';
 import './index.css'
 import { Link } from 'react-router-dom';
 
-const Menu = ({ setMode, mode, login }) => {
-
-    const sound = true;
+const Menu = ({ setMode, setSound, sound, mode, login }) => {
 
     return (
         <div className='sidebar-container'>
@@ -47,8 +45,8 @@ const Menu = ({ setMode, mode, login }) => {
                 </div>
                 <div className='sound-option'>
                     {(sound === true
-                        ? <MdMusicNote className='icon' />
-                        : <MdMusicOff className='icon' />)}
+                        ? <MdMusicNote className='icon' onClick={e => setSound(false)} />
+                        : <MdMusicOff className='icon' onClick={e => setSound(true)} />)}
                 </div>
             </div>
         </div>
