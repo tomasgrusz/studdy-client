@@ -49,7 +49,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
                     return
                 }
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'rename',
                     name: deckName
@@ -71,7 +71,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
 
             } else if (option === 'pause') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'pause'
                 }, {
@@ -91,7 +91,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
 
             } else if (option === 'reset') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'reset'
                 }, {
@@ -111,7 +111,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudy
 
             } else if (option === 'delete') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'delete'
                 }, {
@@ -186,7 +186,7 @@ const SelectedDeck = ({ deck, setStudySession }) => {
     //function for retrieving deck's flashcards
     const getFlashcards = async () => {
         if (deck !== null) {
-            const response = await Axios.post('http://localhost:3001/getFlashcards', {
+            const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/getFlashcards`, {
                 deck: deck,
             }, {
                 headers: {

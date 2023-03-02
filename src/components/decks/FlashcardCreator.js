@@ -45,7 +45,7 @@ const FlashcardCreator = ({ deck }) => {
         //convert content from editor to html
         const flashcard = sanitizeHtml(stateToHTML(editorState.getCurrentContent(), options))
 
-        const response = await Axios.post('http://localhost:3001/createFlashcard', {
+        const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/createFlashcard`, {
             deck: deck,
             content: flashcard
         }, {

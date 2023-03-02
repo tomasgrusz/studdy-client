@@ -28,7 +28,7 @@ const Profile = () => {
 
         try {
             //get logged user
-            const response = await Axios.get('http://localhost:3001/profile', {
+            const response = await Axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/profile`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

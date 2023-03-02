@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
     const [authResult, setAuthResult] = useState(true)
 
     const online = async () => {
-        const response = await axios.get('http://localhost:3001/online', {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/online`, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -37,7 +37,8 @@ const SignOut = () => {
     const [loggedOut, setLoggedOut] = useState(false)
 
     const logout = () => {
-        axios.post('http://localhost:3001/logout', {
+        console.log(process.env.REACT_APP_SERVER_ADDRESS)
+        axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/logout`, {
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +68,7 @@ const Login = () => {
     const userLogIn = async e => {
         e.preventDefault()
 
-        const response = await axios.post('http://localhost:3001/login', {
+        const response = await axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/login`, {
             username: username,
             password: password
         }, {

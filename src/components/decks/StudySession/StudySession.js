@@ -41,7 +41,7 @@ const StudySession = ({ session }) => {
     const navigate = useNavigate();
 
     const startSession = async () => {
-        const response = await Axios.post('http://localhost:3001/studySession', {
+        const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/studySession`, {
             session: studySession,
             options: {
                 state: 'start'
@@ -77,7 +77,7 @@ const StudySession = ({ session }) => {
             return
         }
 
-        const response = await Axios.post('http://localhost:3001/studySession', {
+        const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/studySession`, {
             session: studySession,
             options: {
                 state: 'continue',

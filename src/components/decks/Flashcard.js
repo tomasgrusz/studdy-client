@@ -61,7 +61,7 @@ const Flashcard = (props) => {
 
             } else if (option === 'pause') {
 
-                const response = await Axios.post('http://localhost:3001/flashcardOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/flashcardOptions`, {
                     deck: props.deck,
                     flashcardID: props.id,
                     option: 'pause'
@@ -82,7 +82,7 @@ const Flashcard = (props) => {
 
             } else if (option === 'reset') {
 
-                const response = await Axios.post('http://localhost:3001/flashcardOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/flashcardOptions`, {
                     deck: props.deck,
                     flashcardID: props.id,
                     option: 'reset'
@@ -103,7 +103,7 @@ const Flashcard = (props) => {
 
             } else if (option === 'delete') {
 
-                const response = await Axios.post('http://localhost:3001/flashcardOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/flashcardOptions`, {
                     deck: props.deck,
                     flashcardID: props.id,
                     option: 'delete'

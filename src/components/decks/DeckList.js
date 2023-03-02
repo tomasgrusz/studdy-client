@@ -48,7 +48,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
 
             if (option === 'pause') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'pause'
                 }, {
@@ -68,7 +68,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
 
             } else if (option === 'reset') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'reset'
                 }, {
@@ -88,7 +88,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
 
             } else if (option === 'delete') {
 
-                const response = await Axios.post('http://localhost:3001/deckOptions', {
+                const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/deckOptions`, {
                     deck: deckRef,
                     option: 'delete'
                 }, {
@@ -177,7 +177,7 @@ const DeckCreator = () => {
     const createDeck = async () => {
         //check for empty deck name
         if (deckName !== '') {
-            const response = await Axios.post('http://localhost:3001/createDeck',
+            const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/createDeck`,
                 {
                     name: deckName,
                     category: deckCategory
@@ -241,7 +241,7 @@ const DeckList = ({ setSelectedDeck, setStudySession }) => {
 
         try {
             //get all decks owned by logged user
-            const decks = await Axios.get('http://localhost:3001/decksByUser', {
+            const decks = await Axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/decksByUser`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
