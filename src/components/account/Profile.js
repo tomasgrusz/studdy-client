@@ -9,6 +9,9 @@ import { UserContext } from './UserInfo';
 import { Badge } from '../misc/Badge';
 import Axios from 'axios';
 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 const Profile = () => {
 
     const { user } = useContext(UserContext)
@@ -61,14 +64,14 @@ const Profile = () => {
                 <div className='user-info-container sub'>
                     <div className='username-container sub'>
                         <div className='user-details sub'>
-                            <span className='likes'><FaHeart className='icon' />{profile.hearts}</span>
-                            <span className='stars'><BsStarFill className='icon' />{profile.stars}</span>
-                            <label className='username'>{profile.username}</label>
-                            <label className='title'>{profile.title}</label>
+                            <span className='likes'><FaHeart className='icon' />{profile.hearts !== undefined ? profile.hearts : <Skeleton inline width={'3ch'} baseColor={'var(--main-container-color)'} />}</span>
+                            <span className='stars'><BsStarFill className='icon' />{profile.stars !== undefined ? profile.stars : <Skeleton inline width={'3ch'} baseColor={'var(--main-container-color)'} />}</span>
+                            <label className='username'>{profile.username || <Skeleton inline width={'5ch'} baseColor={'var(--main-container-color)'} />}</label>
+                            <label className='title'>{profile.title || <Skeleton inline width={'5ch'} baseColor={'var(--main-container-color)'} />}</label>
                         </div>
                         <div className='user-level sub'>
                             <CircularProgressBar progress={levelProgress} size={'120px'} progressColor={'var(--palette-color-3)'} progressColor2={'#4D54EB'} progressColor3={'#D270F4'} outerColor={'rgba(119,79,209,0.25)'} innerColor1={'var(--palette-color-2)'} innerColor2={'var(--var-container-color)'} textColor={'var(--main-text-color)'} customText={level} fontSize={'40px'} />
-                            <label className='level'>Level {level}</label>
+                            <label className='level'>Level {level || <Skeleton inline width={'2ch'} baseColor={'var(--main-container-color)'} />}</label>
                         </div>
                     </div>
                     <div className='xp-progress-container sub'>
@@ -78,26 +81,26 @@ const Profile = () => {
                 </div>
                 <div className='about-me-container sub'>
                     ABOUT ME
-                    <div className='text-area-wrapper'><textarea className='about-me' value={about} onChange={e => setAbout(e.target.value)}></textarea></div>
+                    <div className='text-area-wrapper'>{about ? <textarea className='about-me' value={about} onChange={e => setAbout(e.target.value)}></textarea> : <Skeleton inline count={3} baseColor={'var(--main-container-color)'} />}</div>
                 </div>
                 <div className='favorite-badges-container sub'>
                     FAVORITE BADGES
                     <div className='favorite-badges'>
-                        {favoriteBadges.map((badge) => {
+                        {favoriteBadges.length > 0 ? favoriteBadges.map((badge) => {
                             return <Badge size={'100px'} id={badge._id} name={badge.name} description={badge.description} stage={badge.stage} progress={badge.progress} milestones={badge.milestones} />
-                        })}
+                        }) : <><Skeleton inline width={'150px'} height={'175px'} baseColor={'var(--main-container-color)'} /><Skeleton inline width={'150px'} height={'175px'} baseColor={'var(--main-container-color)'} /><Skeleton inline width={'150px'} height={'175px'} baseColor={'var(--main-container-color)'} /></>}
                     </div>
                 </div>
                 <div className='profile-stats-container sub'>
-                    <label>Member since {(new Date(profile.dateJoined)).toLocaleDateString("en-UK")}</label>
+                    <label>Member since {profile.dateJoined ? (new Date(profile.dateJoined)).toLocaleDateString("en-UK") : <Skeleton inline width={'10ch'} baseColor={'var(--main-container-color)'} />}</label>
                 </div>
             </div>
 
             <div className='profile-info-container var'>
                 <div className='badges'>
-                    {badges.map((badge) => {
+                    {badges.length > 0 ? badges.map((badge) => {
                         return <Badge size={'100px'} id={badge._id} name={badge.name} description={badge.description} stage={badge.stage} progress={badge.progress} milestones={badge.milestones} />
-                    })}
+                    }) : [...Array(12)].map((e, i) => { return <Skeleton inline width={'150px'} height={'175px'} baseColor={'var(--main-container-color)'} /> })}
                 </div>
             </div>
 

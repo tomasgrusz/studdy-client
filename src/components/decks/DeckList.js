@@ -12,7 +12,10 @@ import './DeckList.css'
 import { Portal } from "../misc/Portal";
 import { usePopper } from 'react-popper';
 
-const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, deckRef, description }) => {
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, deckRef, description, skeleton }) => {
 
     const stars = () => {
         switch (stage) {
@@ -129,21 +132,21 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
             <div className="deck-stars">{stars()}</div>
             <div className="deck-info-container">
                 <span className="deck-category">
-                    <h3 className="deck-name">{name}</h3>
-                    <Category category={category} size={'25px'} />
+                    <h3 className="deck-name">{name || <Skeleton inline width={'12ch'} baseColor={'var(--main-container-color)'} />}</h3>
+                    <Category category={category || 0} size={'25px'} />
                 </span>
-                <label className="deck-description">{description}</label>
+                <label className="deck-description">{description || <Skeleton inline width={'8ch'} baseColor={'var(--main-container-color)'} />}</label>
             </div>
-            <div className="deck-progress" onClick={e => setDeckStat(!deckStat)}>
+            <div disabled={skeleton} className="deck-progress" onClick={e => setDeckStat(!deckStat)}>
                 {!deckStat
                     ? <CircularProgressBar progress={Math.round(100 * progress / total)} size={'120px'} progressColor={'var(--palette-color-4)'} progressColor2={'var(--palette-color-4)'} progressColor3={'var(--palette-color-3)'} outerColor={'var(--palette-color-6)'} innerColor1={'var(--palette-color-2)'} innerColor2={'var(--var-container-color)'} textColor={'var(--main-text-color)'} fontSize={'24px'} ratio={0.8} golden={(stage === 4)} />
                     : <FlashcardStarStats flashcardStats={[flashcardStats.stageZero, flashcardStats.stageOne, flashcardStats.stageTwo, flashcardStats.stageThree, flashcardStats.stageFour]} />}
             </div>
             <div className="deck-session-start">
-                <label>Flashcards: {total}</label>
+                <label>Flashcards: {total !== undefined ? total : <Skeleton inline width={'3ch'} baseColor={'var(--main-container-color)'} />}</label>
                 <div className="deck-action-buttons">
-                    <button className="session-button studdy-button" onClick={e => { setSelectedDeck(deckRef); setStudySession(deckRef); }}>Session</button>
-                    <span className="icon" ref={setReferenceElement} onClick={e => setDeckOptions(!deckOptions)}><BsThreeDotsVertical /></span>
+                    <button disabled={skeleton} className="session-button studdy-button" onClick={e => { setSelectedDeck(deckRef); setStudySession(deckRef); }}>Session</button>
+                    <span disabled={skeleton} className="icon" ref={setReferenceElement} onClick={e => setDeckOptions(!deckOptions)}><BsThreeDotsVertical /></span>
                     {!deckOptions ? '' :
                         <Portal >
                             <div className="options-container" ref={setPopperElement} style={styles.popper} {...attributes.popper} >
@@ -337,50 +340,50 @@ const DeckList = ({ setSelectedDeck, setStudySession }) => {
     }, [categoryFilter, stageCategoryFilter, deckSearch])
 
     return (
-        <>
-            {isLoaded
-                ? <div className="decklist-container">
-                    <div className={`deck-search-container`}>
-                        <input type="text" className={`deck-search`} placeholder="Search..." value={deckSearch} onChange={e => setDeckSearch(e.target.value)}></input>
-                        <div className='category-filters-container'>
-                            <span className={`category-filter ${(categoryFilter[0]) ? 'active' : ''}`} onClick={e => filterCategory(0)}><Category category={0} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[1]) ? 'active' : ''}`} onClick={e => filterCategory(1)}><Category category={1} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[2]) ? 'active' : ''}`} onClick={e => filterCategory(2)}><Category category={2} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[3]) ? 'active' : ''}`} onClick={e => filterCategory(3)}><Category category={3} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[4]) ? 'active' : ''}`} onClick={e => filterCategory(4)}><Category category={4} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[5]) ? 'active' : ''}`} onClick={e => filterCategory(5)}><Category category={5} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[6]) ? 'active' : ''}`} onClick={e => filterCategory(6)}><Category category={6} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[7]) ? 'active' : ''}`} onClick={e => filterCategory(7)}><Category category={7} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[8]) ? 'active' : ''}`} onClick={e => filterCategory(8)}><Category category={8} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[9]) ? 'active' : ''}`} onClick={e => filterCategory(9)}><Category category={9} size='32px' /></span>
-                            <span className={`category-filter ${(categoryFilter[10]) ? 'active' : ''}`} onClick={e => filterCategory(10)}><Category category={10} size='32px' /></span>
-                        </div>
-                        <div className="deck-result-container">
-                            <button className="add-deck-button studdy-button" onClick={e => setNewDeckPopup(!newDeckPopup)}>+ NEW DECK</button>
-                            <label className="found-decks-count">{filteredDeckList.length} Deck(s) found</label>
-                        </div>
-                        <div className="star-filters-container">
-                            <span className={`star-filter ${(stageCategoryFilter[1]) ? 'active' : ''}`} onClick={e => filterStageCategory(1)}><StarCategory stage={1} size='24px' /></span>
-                            <span className={`star-filter ${(stageCategoryFilter[2]) ? 'active' : ''}`} onClick={e => filterStageCategory(2)}><StarCategory stage={2} size='24px' /></span>
-                            <span className={`star-filter ${(stageCategoryFilter[3]) ? 'active' : ''}`} onClick={e => filterStageCategory(3)}><StarCategory stage={3} size='24px' /></span>
-                            <span className={`star-filter ${(stageCategoryFilter[4]) ? 'active' : ''}`} onClick={e => filterStageCategory(4)}><StarCategory stage={4} size='24px' /></span>
-                        </div>
-                    </div>
-                    <div className="filtered-decks">
-                        <div className={`deck-creator-container creator-container ${newDeckPopup ? 'active' : 'inactive'}`}>
-                            <DeckCreator />
-                        </div>
-                        {sortDeckList(filteredDeckList).map((deck, index) => {
-                            return (
-                                <div className='deck-container' deck={deck} key={'div' + deck.name + index}>
-                                    <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
-                                </div>
-                            );
-                        })}
-                    </div>
+        <div className="decklist-container">
+            <div className={`deck-search-container`}>
+                <input disabled={!isLoaded} type="text" className={`deck-search`} placeholder="Search..." value={deckSearch} onChange={e => setDeckSearch(e.target.value)}></input>
+                <div className='category-filters-container'>
+                    <span className={`category-filter ${(categoryFilter[0]) ? 'active' : ''}`} onClick={e => filterCategory(0)}><Category category={0} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[1]) ? 'active' : ''}`} onClick={e => filterCategory(1)}><Category category={1} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[2]) ? 'active' : ''}`} onClick={e => filterCategory(2)}><Category category={2} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[3]) ? 'active' : ''}`} onClick={e => filterCategory(3)}><Category category={3} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[4]) ? 'active' : ''}`} onClick={e => filterCategory(4)}><Category category={4} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[5]) ? 'active' : ''}`} onClick={e => filterCategory(5)}><Category category={5} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[6]) ? 'active' : ''}`} onClick={e => filterCategory(6)}><Category category={6} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[7]) ? 'active' : ''}`} onClick={e => filterCategory(7)}><Category category={7} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[8]) ? 'active' : ''}`} onClick={e => filterCategory(8)}><Category category={8} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[9]) ? 'active' : ''}`} onClick={e => filterCategory(9)}><Category category={9} size='32px' /></span>
+                    <span className={`category-filter ${(categoryFilter[10]) ? 'active' : ''}`} onClick={e => filterCategory(10)}><Category category={10} size='32px' /></span>
                 </div>
-                : <></>}
-        </>
+                <div className="deck-result-container">
+                    <button disabled={!isLoaded} className="add-deck-button studdy-button" onClick={e => setNewDeckPopup(!newDeckPopup)}>+ NEW DECK</button>
+                    <label className="found-decks-count">{deckList.length > 0 ? filteredDeckList.length : <Skeleton inline width={'2ch'} baseColor={'var(--main-container-color)'} />}  Deck(s) found</label>
+                </div>
+                <div className="star-filters-container">
+                    <span className={`star-filter ${(stageCategoryFilter[1]) ? 'active' : ''}`} onClick={e => filterStageCategory(1)}><StarCategory stage={1} size='24px' /></span>
+                    <span className={`star-filter ${(stageCategoryFilter[2]) ? 'active' : ''}`} onClick={e => filterStageCategory(2)}><StarCategory stage={2} size='24px' /></span>
+                    <span className={`star-filter ${(stageCategoryFilter[3]) ? 'active' : ''}`} onClick={e => filterStageCategory(3)}><StarCategory stage={3} size='24px' /></span>
+                    <span className={`star-filter ${(stageCategoryFilter[4]) ? 'active' : ''}`} onClick={e => filterStageCategory(4)}><StarCategory stage={4} size='24px' /></span>
+                </div>
+            </div>
+            <div className="filtered-decks">
+                <div className={`deck-creator-container creator-container ${newDeckPopup ? 'active' : 'inactive'}`}>
+                    <DeckCreator />
+                </div>
+                {deckList.length > 0 ? sortDeckList(filteredDeckList).map((deck, index) => {
+                    return (
+                        <div className='deck-container' deck={deck} key={'div' + deck.name + index}>
+                            <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
+                        </div>
+                    );
+                }) : [...Array(24)].map((e, i) => {
+                    return <div className='deck-container' key={i}>
+                        <Deck skeleton />
+                    </div>
+                })}
+            </div>
+        </div>
     )
 }
 

@@ -6,6 +6,9 @@ import './Home.css'
 import { ActivityChart, ActivityProgress } from '../misc/Activity'
 import StudySession from '../decks/StudySession/StudySession'
 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 const Home = () => {
 
     const [profile, setProfile] = useState({})
@@ -53,11 +56,11 @@ const Home = () => {
             {(studySession === null)
                 ? <div className="home-container">
                     <div className='welcome-message sub one'>
-                        <label>Welcome back, {profile.username}.</label>
+                        <label>Welcome back, {profile.username || <Skeleton inline width={'5ch'} baseColor={'var(--main-container-color)'} />}.</label>
                     </div>
                     <div className='daily-bonus sub two'>
                         <span>Daily Bonus</span>
-                        <span className='bonus-text'>{profile.dailyBonus}</span>
+                        <span className='bonus-text'>{profile.dailyBonus !== undefined ? profile.dailyBonus : <Skeleton inline width={'2ch'} baseColor={'var(--main-container-color)'} />}</span>
                     </div>
                     <div className='friends-list sub three'>
                         Friends List
@@ -76,11 +79,19 @@ const Home = () => {
                             {recentDeck !== null ? <div className='deck-container' deck={recentDeck}>
                                 <label className='recent-decks-label'>MOST RECENT SESSION</label>
                                 <Deck name={recentDeck.name} category={recentDeck.category} total={recentDeck.total} progress={recentDeck.progress} stage={recentDeck.stage} flashcardStats={recentDeck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={recentDeck} description={recentDeck.description} />
-                            </div> : <>No sessions found.</>}
-                            {dailyDecks.map(deck => <div className='deck-container' deck={deck}>
+                            </div> : <div className='deck-container'>
+                                <label className='recent-decks-label'><Skeleton inline width={'10ch'} baseColor={'var(--main-container-color)'} /></label>
+                                <Deck skeleton />
+                            </div>}
+                            {dailyDecks.length > 0 ? dailyDecks.map(deck => <div className='deck-container' deck={deck}>
                                 <label className='recent-decks-label'>SUGGESTION</label>
                                 <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
-                            </div>)}
+                            </div>) : [...Array(3)].map((e, i) => {
+                                return <div className='deck-container' key={i}>
+                                    <label className='recent-decks-label'><Skeleton inline width={'10ch'} baseColor={'var(--main-container-color)'} /></label>
+                                    <Deck skeleton />
+                                </div>
+                            })}
                         </div>
                     </div>
                     <div className='community-feed sub eight'>
