@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { BsStarFill } from 'react-icons/bs';
 import { ProgressBar } from './ProgressBar';
 

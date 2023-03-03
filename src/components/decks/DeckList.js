@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import { CircularProgressBar, ProgressBar } from "../misc/ProgressBar";
+import { CircularProgressBar } from "../misc/ProgressBar";
 import { Category, FlashcardStarStats, StarCategory } from "../misc/Category";
-import { BsStar, BsStarHalf, BsStarFill, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsStarHalf, BsStarFill, BsThreeDotsVertical } from 'react-icons/bs';
 import { MdOutlineFeaturedPlayList, MdPauseCircleOutline, MdAutorenew, MdDeleteOutline } from 'react-icons/md';
 
 import Axios from 'axios';
@@ -280,7 +280,7 @@ const DeckList = ({ setSelectedDeck, setStudySession }) => {
     //run getDeckList once when component renders
     useEffect(() => {
         getDeckList()
-    }, [])
+    })
 
     const filterCategory = (category) => {
         let newFilter = [...categoryFilter];

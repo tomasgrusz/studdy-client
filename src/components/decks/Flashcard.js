@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BsStar, BsStarFill, BsThreeDotsVertical } from 'react-icons/bs';
 import { MdPauseCircleOutline, MdAutorenew, MdDeleteOutline } from 'react-icons/md';
-import { HiPencilAlt } from 'react-icons/hi';
 import { Category } from '../misc/Category';
 
 import { Portal } from '../misc/Portal';

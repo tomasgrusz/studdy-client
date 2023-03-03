@@ -42,7 +42,7 @@ const UserInfo = () => {
 
     useEffect(() => {
         getUser()
-    }, [])
+    })
 
     return (
         <>

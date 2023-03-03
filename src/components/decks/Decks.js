@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import { BsStar, BsStarHalf, BsStarFill } from 'react-icons/bs';
+import { BsStarHalf, BsStarFill } from 'react-icons/bs';
 
 import DeckList from "./DeckList";
-import { CircularProgressBar, ProgressBar } from "../misc/ProgressBar";
+import { CircularProgressBar } from "../misc/ProgressBar";
 import { Category, FlashcardStarStats, StarCategory } from "../misc/Category";
 import FlashcardCreator from "./FlashcardCreator";
 import { Flashcard } from "./Flashcard";

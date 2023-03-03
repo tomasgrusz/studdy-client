@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import './Login.css'
 import { useEffect, useState } from "react";
-import Studio from "../three/Studio";
-import Three from "../three";
 import Logo from "../three/Logo";
 
 const ProtectedRoute = ({ children }) => {
@@ -27,7 +25,7 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         online()
-    }, [])
+    })
 
     return authResult ? children : <Navigate to="/login" replace />;
 };
