@@ -12,6 +12,7 @@ import { Flashcard } from "./Flashcard";
 import StudySession from "./StudySession/StudySession";
 
 import './Decks.css'
+import DeckShare from "./DeckShare";
 
 const Deck = ({ name, progress, total, category, stage, flashcardStats, setStudySession, deckRef, description }) => {
 
@@ -273,19 +274,24 @@ const Decks = () => {
 
     const [selectedDeck, setSelectedDeck] = useState(null)
     const [studySession, setStudySession] = useState(null)
+    const [shareDeck, setShareDeck] = useState(null)
 
-    return (
-        <>
-            {(studySession === null)
-                ? <div className='decks-container'>
-                    {selectedDeck
-                        ? <SelectedDeck deck={selectedDeck} setStudySession={setStudySession} />
-                        : <DeckList setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} />}
-                </div>
-                : <StudySession session={studySession} />
-            }
-        </>
-    )
+    if (studySession) {
+        return <StudySession session={studySession} />
+    } else {
+
+        if (selectedDeck) {
+            return <div className='decks-container'><SelectedDeck deck={selectedDeck} setStudySession={setStudySession} /></div>
+        }
+
+        if (shareDeck) {
+            return <DeckShare deck={shareDeck} />
+        }
+
+        return <div className='decks-container'> <DeckList setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} setShareDeck={setShareDeck} /></div>
+
+    }
 }
 
 export default Decks;
+export { SelectedDeck }

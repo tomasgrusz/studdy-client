@@ -1,0 +1,58 @@
+.friends-list-container {
+  overflow-y: auto;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.friends-list-container {
+  scrollbar-width: auto;
+  scrollbar-color: var(--session-color-2) transparent;
+}
+/* Chrome, Edge, and Safari */
+.friends-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+.friends-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.friends-list-container::-webkit-scrollbar-thumb {
+  background-color: var(--session-color-2);
+  border-radius: 10px;
+  border: 3px solid transparent;
+}
+
+.friend-requests,
+.friends {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-right: 1ch;
+}
+
+.friend-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.friend {
+  justify-self: left;
+  flex-grow: 1;
+}
+
+.online-status.online::before {
+  content: "";
+  display: inline-block;
+  margin-right: 1ch;
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  background-color: #8ee058;
+}
+
+.online-status.offline {
+  opacity: 0.5;
+}

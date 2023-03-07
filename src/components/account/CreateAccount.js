@@ -1,15 +1,33 @@
 import { useState } from "react";
-
+import Axios from 'axios';
 import Logo from "../three/Logo";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [agreed, setAgreed] = useState(false);
+    const navigate = useNavigate();
 
-    const createAccount = (e) => {
-        e.preventDefault()
+    const createAccount = async (e) => {
+        e.preventDefault();
+        console.log('Hi')
+
+        const response = await Axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/createUser`, {
+            username: username,
+            password: password
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
+        console.log(response)
+        if (response.data.message === 'Success') {
+            alert(`Successfully created user, please log in!`)
+            navigate('/login', { replace: true });
+        }
     }
 
     return (

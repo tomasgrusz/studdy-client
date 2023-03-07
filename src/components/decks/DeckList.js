@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { CircularProgressBar } from "../misc/ProgressBar";
 import { Category, FlashcardStarStats, StarCategory } from "../misc/Category";
 import { BsStarHalf, BsStarFill, BsThreeDotsVertical } from 'react-icons/bs';
-import { MdOutlineFeaturedPlayList, MdPauseCircleOutline, MdAutorenew, MdDeleteOutline } from 'react-icons/md';
+import { MdOutlineFeaturedPlayList, MdPauseCircleOutline, MdAutorenew, MdDeleteOutline, MdShare } from 'react-icons/md';
 
 import Axios from 'axios';
 
@@ -15,7 +15,7 @@ import { usePopper } from 'react-popper';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, deckRef, description, skeleton }) => {
+const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelectedDeck, setStudySession, setShareDeck, deckRef, description, skeleton }) => {
 
     const stars = () => {
         switch (stage) {
@@ -151,6 +151,7 @@ const Deck = ({ name, progress, total, category, stage, flashcardStats, setSelec
                         <Portal >
                             <div className="options-container" ref={setPopperElement} style={styles.popper} {...attributes.popper} >
                                 <span onClick={e => setSelectedDeck(deckRef)}><MdOutlineFeaturedPlayList className="icon" />Flashcards</span>
+                                <span onClick={e => setShareDeck(deckRef)}><MdShare className="icon" />Share Deck</span>
                                 <span onClick={e => { if (window.confirm(`Are you sure you want to pause all flashcards in deck ${name}?`)) { deckOptionsFunction('pause') } }}><MdPauseCircleOutline className="icon" />Pause Deck</span>
                                 <span onClick={e => { if (window.confirm(`Are you sure you want to reset all flashcards' progress in deck ${name}?\nYour profile stats and badges will not be affected.\nThis action cannot be undone.`)) { deckOptionsFunction('reset') } }}><MdAutorenew className="icon" />Reset Progress</span>
                                 <span className="var danger" onClick={e => { if (window.confirm(`Are you sure you want to delete deck ${name}?\nThis action cannot be undone.`)) { deckOptionsFunction('delete') } }}><MdDeleteOutline className="icon" />Delete Deck</span>
@@ -238,7 +239,7 @@ const DeckCreator = () => {
 }
 
 
-const DeckList = ({ setSelectedDeck, setStudySession }) => {
+const DeckList = ({ setSelectedDeck, setStudySession, setShareDeck }) => {
 
     const getDeckList = async () => {
 
@@ -374,7 +375,7 @@ const DeckList = ({ setSelectedDeck, setStudySession }) => {
                 {deckList.length > 0 ? sortDeckList(filteredDeckList).map((deck, index) => {
                     return (
                         <div className='deck-container' deck={deck} key={'div' + deck.name + index}>
-                            <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} deckRef={deck} description={deck.description} />
+                            <Deck name={deck.name} category={deck.category} total={deck.total} progress={deck.progress} stage={deck.stage} key={deck.name + index} flashcardStats={deck.flashcardStats} setSelectedDeck={setSelectedDeck} setStudySession={setStudySession} setShareDeck={setShareDeck} deckRef={deck} description={deck.description} />
                         </div>
                     );
                 }) : [...Array(24)].map((e, i) => {

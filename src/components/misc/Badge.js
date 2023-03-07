@@ -52,7 +52,8 @@ const Badge = ({ stage, size, name, description, progress, id, milestones }) => 
         margin: 0,
         height: `calc(${size} * 1.75)`,
         width: `calc(${size} * 1.5)`,
-        filter: `drop-shadow(0px 0px ${stage ? stage * 2 : 0}px ${BadgeStyle[(stage ? 4 - stage : 0)]})`
+        filter: `drop-shadow(0px 0px ${stage ? stage * 2 : 0}px ${BadgeStyle[(stage ? 4 - stage : 0)]})`,
+        cursor: 'pointer'
     }
 
     const BadgeInfoStyle = {

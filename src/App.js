@@ -14,6 +14,7 @@ import './App.css'
 import { Home } from './components/home/Home';
 import { Settings } from './components/account/Settings';
 import { CreateAccount } from './components/account/CreateAccount';
+import OtherProfile from './components/account/OtherProfile';
 
 const App = () => {
 
@@ -51,6 +52,7 @@ const App = () => {
             <Route path='/join' element={layout(<CreateAccount />, false)} />
             <Route path='/' element={<ProtectedRoute>{layout(<Home />, true)}</ProtectedRoute>}></Route>
             <Route path='/profile' element={<ProtectedRoute>{layout(<Profile />, true)}</ProtectedRoute>}></Route>
+            <Route path='/user/:username' element={<ProtectedRoute>{layout(<OtherProfile />, true)}</ProtectedRoute>}></Route>
             <Route path='/studio' element={<ProtectedRoute>{layout(<Studio />, true)}</ProtectedRoute>}></Route>
             <Route path='/flashcards' element={<ProtectedRoute>{layout(<Decks />, true)}</ProtectedRoute>}></Route>
             <Route path='/settings' element={<ProtectedRoute>{layout(<Settings />, true)}</ProtectedRoute>}></Route>

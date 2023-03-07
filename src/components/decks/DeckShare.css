@@ -1,0 +1,39 @@
+.deck-share-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: calc(100vh - 4rem);
+  margin: 2rem;
+  gap: 1rem;
+}
+
+.deck-share-subcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.deck-share-subcontainer .friends-list-container {
+  flex-grow: 1;
+}
+
+.deck-share-container .flashcardlist-container {
+  height: calc(100vh - 4rem - 2rem) !important;
+}
+
+.deck-share-container .flashcardlist-container,
+.deck-share-container .friends-list-container,
+.deck-share-subcontainer .deck {
+  padding: 1rem;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  /* background: var(--var-container-color); */
+  box-shadow: 0 0.5rem 1rem 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: auto !important;
+}
+
+.deck-share-container input[type="checkbox"] {
+  transform: scale(1.5);
+}

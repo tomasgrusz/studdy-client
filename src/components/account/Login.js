@@ -76,9 +76,10 @@ const Login = () => {
             withCredentials: true
         })
         if (response.data.message === 'logged in') {
-            alert(`Successfully logged in as ${response.data.user}!`)
             Cookies.set('user', true)
             navigate('/', { replace: true });
+        } else {
+            alert(`Incorrect username or password, please try again!`);
         }
     }
 
