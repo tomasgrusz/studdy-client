@@ -8,17 +8,16 @@
 
 .settings-subcontainer {
   margin: 1rem;
+  padding: 1rem;
   border-radius: 20px 50px 20px 20px;
   background: var(--var-container-color);
   box-shadow: 0 0.5rem 1rem 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.18);
-
+  gap: 1rem;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  justify-content: space-around;
 }
 
 .main {
@@ -40,7 +39,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .goal-container {
@@ -48,4 +47,8 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 2rem;
+}
+
+.delete-account-button {
+  margin: 0 auto !important;
 }

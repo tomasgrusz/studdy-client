@@ -88,6 +88,10 @@ const Profile = () => {
         getProfile()
     }, [])
 
+    useEffect(() => {
+        document.title = "Studdy | Profile"
+    }, [])
+
     return (
         <div className="profile-container">
             <div className='profile-info-container main'>

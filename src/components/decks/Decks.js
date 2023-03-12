@@ -276,6 +276,10 @@ const Decks = () => {
     const [studySession, setStudySession] = useState(null)
     const [shareDeck, setShareDeck] = useState(null)
 
+    useEffect(() => {
+        document.title = "Studdy | Decks"
+    }, [])
+
     if (studySession) {
         return <StudySession session={studySession} />
     } else {

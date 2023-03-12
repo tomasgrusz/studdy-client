@@ -26,8 +26,8 @@ const Menu = ({ setMode, setSound, sound, mode, login }) => {
                     <li className={`sidebar-item ${window.location.pathname === '/studio' ? 'active' : ''}`}>
                         <Link to='/studio'><MdBedroomChild className='icon' />Studio</Link>
                     </li>
-                    <li className={`sidebar-item alt ${window.location.pathname === '/flashcards' ? 'active' : ''}`}>
-                        <Link to='/flashcards'><MdLibraryBooks className='icon' />Decks</Link>
+                    <li className={`sidebar-item alt ${window.location.pathname === '/decks' ? 'active' : ''}`}>
+                        <Link to='/decks'><MdLibraryBooks className='icon' />Decks</Link>
                     </li>
                     <li className={`sidebar-item ${window.location.pathname === '/settings' ? 'active' : ''}`}>
                         <Link to='/settings'><IoSettingsSharp className='icon' />Settings</Link>

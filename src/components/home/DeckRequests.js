@@ -46,7 +46,7 @@ const DeckRequest = ({ deckRequest }) => {
         })
         if (response.data.message === 'Success') {
 
-            navigate('/flashcards', { replace: true });
+            navigate('/decks', { replace: true });
         } else {
             alert('An unexpected error occured, please try again later or contact us.');
             navigate('/', { replace: true });
@@ -104,7 +104,7 @@ const DeckRequests = ({ sharedDecks, setDeckRequest }) => {
         })
         if (response.data.message === 'Success') {
 
-            navigate('/flashcards', { replace: true });
+            navigate('/decks', { replace: true });
         } else {
             alert('An unexpected error occured, please try again later or contact us.');
             navigate('/', { replace: true });

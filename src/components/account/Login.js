@@ -83,6 +83,10 @@ const Login = () => {
         }
     }
 
+    useEffect(() => {
+        document.title = "Studdy | Login"
+    }, [])
+
     return (
         <div className="login-container">
             <div className="foreground">

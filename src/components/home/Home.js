@@ -53,6 +53,10 @@ const Home = () => {
         getProfile()
     }, [])
 
+    useEffect(() => {
+        document.title = "Studdy | Home"
+    }, [])
+
     const [studySession, setStudySession] = useState(null)
     const [selectedDeck, setSelectedDeck] = useState(null)
     const [subThreeShow, setSubThreeShow] = useState(false)

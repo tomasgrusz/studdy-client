@@ -54,7 +54,7 @@ const App = () => {
             <Route path='/profile' element={<ProtectedRoute>{layout(<Profile />, true)}</ProtectedRoute>}></Route>
             <Route path='/user/:username' element={<ProtectedRoute>{layout(<OtherProfile />, true)}</ProtectedRoute>}></Route>
             <Route path='/studio' element={<ProtectedRoute>{layout(<Studio />, true)}</ProtectedRoute>}></Route>
-            <Route path='/flashcards' element={<ProtectedRoute>{layout(<Decks />, true)}</ProtectedRoute>}></Route>
+            <Route path='/decks' element={<ProtectedRoute>{layout(<Decks />, true)}</ProtectedRoute>}></Route>
             <Route path='/settings' element={<ProtectedRoute>{layout(<Settings />, true)}</ProtectedRoute>}></Route>
             <Route path='/sign-out' element={<ProtectedRoute>{layout(<SignOut />, true)}</ProtectedRoute>}></Route>
           </Routes>
