@@ -1,10 +1,13 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
+import { OrbitControls, PerspectiveCamera, SpotLight, useGLTF, useHelper } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 
 const Model = () => {
+
+    const { nodes, materials } = useGLTF("/intelligem.glb");
+
     const infiniteSphere = useRef(null);
 
     const [t, setT] = useState(0)
@@ -14,7 +17,7 @@ const Model = () => {
         infiniteSphere.current.rotation.y += 0.03;
 
         infiniteSphere.current.position.x = 1 * Math.cos(t) + 0.75;
-        infiniteSphere.current.position.z = 1 * Math.sin(t) + 1.35; // These to strings make it work
+        infiniteSphere.current.position.z = 1 * Math.sin(t) + 1.25; // These to strings make it work
     })
 
     const girth = 0.3;
@@ -26,13 +29,17 @@ const Model = () => {
             <OrbitControls enablePan={false} enableZoom={false} enableRotate={false} minDistance={6.0} maxDistance={12} maxAzimuthAngle={Math.PI / 2} minAzimuthAngle={0} maxPolarAngle={Math.PI / 2.2} minPolarAngle={0.5} />
 
             <group rotation={[0, Math.PI / 2, 0]}>
-
-                <group ref={infiniteSphere} position={[0.75, 2.2, 2.4]} >
-                    <mesh receiveShadow>
-                        <sphereGeometry args={[0.25, 32, 32]} />
-                        <meshStandardMaterial color={"#94fae7"} metalness={1} roughness={0} emissive={"#94fae7"} />
-                    </mesh>
-                    <pointLight args={["#94fae7", 5, 10, Math.PI / 2, 0.5]} decay={10} castShadow />
+                <group dispose={null} ref={infiniteSphere} scale={0.25} position={[1, 1.75, 1]}>
+                    <mesh
+                        castShadow
+                        receiveShadow
+                        geometry={nodes.Intelligem.geometry}
+                        material={materials.Intelligem}
+                        position={[0, 0.01, 0]}
+                        rotation={[0, -0.2, 0]}
+                        scale={[0.73, 0.89, 0.73]}
+                    />
+                    <pointLight args={["#00ffa0", 10, 10, Math.PI / 2, 0.5]} decay={10} castShadow position={[0, 3, 0]} shadow-mapSize-height={4096} shadow-mapSize-width={4096} shadow-bias={-0.0005} />
                 </group>
 
 
@@ -170,7 +177,7 @@ const Model = () => {
                 <spotLight args={["#0000ff", 15, 5, Math.PI / 2, 0.5]} position={[-5, 3, 5]} castShadow />
             </group>
 
-            <ambientLight args={["#ffffff", 0.75]} />
+            <ambientLight args={["#fff", 0.75]} />
         </>
     )
 }

@@ -23,7 +23,7 @@ ChartJS.register(
 
 const ActivityChart = ({ activity }) => {
 
-    const [mode, setMode] = useState(localStorage.getItem('darkMode'))
+    const mode = localStorage.getItem('darkMode');
 
     const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -121,7 +121,7 @@ const ActivityChart = ({ activity }) => {
 
 const ActivityProgress = ({ goals }) => {
 
-    const [mode, setMode] = useState(localStorage.getItem('darkMode'))
+    const mode = localStorage.getItem('darkMode');
 
     const data = {
         labels: ['Progress', 'Milestone'],

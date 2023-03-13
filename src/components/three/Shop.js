@@ -22,7 +22,7 @@ const ShopDetectors = ({ setItem }) => {
 
     return (
         <group onDoubleClick={(e) => setItem(e.object)} onClick={(e) => { if (transparency) { setItem(e.object) } }}>
-            <Html position={[0.23, 2.7, 2.8]} rotation={[0, Math.PI / 2, 0]} scale={0.25} transform>
+            <Html position={[0.1, 2.65, 2.85]} rotation={[0, Math.PI / 2, 0]} scale={0.25} transform>
                 <ToggleSwitch toggle={transparency} toggleFunction={setTransparency} />
             </Html>
             <mesh

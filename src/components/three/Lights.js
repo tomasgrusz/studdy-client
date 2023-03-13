@@ -1,6 +1,8 @@
 
 
-export const Lights = ({ mode }) => {
+export const Lights = () => {
+
+    const mode = localStorage.getItem('darkMode');
 
     const darkModeLights = <>
         <ambientLight args={["#beb2ff", 0.25]} />

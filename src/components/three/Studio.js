@@ -49,8 +49,6 @@ useGLTF.preload("/studio.glb");
 
 const Studio = () => {
 
-    const mode = localStorage.getItem('darkMode');
-
     const orbitControlsRef = useRef(null);
 
     const studioRef = useRef();
@@ -67,7 +65,7 @@ const Studio = () => {
                         <StudioComponent ref={studioRef} scale={1.5} position={[-1, 0, -1]} />
                         <PerspectiveCamera makeDefault position={[10, 10, 10]} />
                         <OrbitControls ref={orbitControlsRef} enablePan={false} minDistance={6.0} maxDistance={12} maxAzimuthAngle={Math.PI / 2} minAzimuthAngle={0} maxPolarAngle={Math.PI / 2.5} minPolarAngle={0.5} />
-                        <Lights mode={mode} />
+                        <Lights />
                     </Suspense>
                 </Canvas >
             </div>
