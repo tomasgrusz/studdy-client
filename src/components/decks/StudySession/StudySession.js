@@ -54,8 +54,6 @@ const StudySession = ({ session }) => {
         })
         if (response.data.message === 'Success' && response.data.flashcard && response.data.session) {
 
-            //do something
-            console.log(response.data);
             setStudySession(response.data.session)
             setFlashcard(response.data.flashcard)
 
