@@ -17,9 +17,9 @@ import { BsFillPlayCircleFill, BsPauseCircleFill, BsFillCloudRainFill } from 're
 import { FaGuitar, FaTree, FaUmbrellaBeach } from 'react-icons/fa'
 import { GiCampfire, GiCoffeeCup } from 'react-icons/gi'
 
-const soundMode = localStorage.getItem('sound') ? localStorage.getItem('sound') === "true" : true;
-
 const playSFX = (sound) => {
+
+    const soundMode = localStorage.getItem('sound') ? localStorage.getItem('sound') === "true" : true;
 
     if (!soundMode) {
         return
