@@ -35,7 +35,6 @@ const SignOut = () => {
     const [loggedOut, setLoggedOut] = useState(false)
 
     const logout = () => {
-        console.log(process.env.REACT_APP_SERVER_ADDRESS)
         axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/logout`, {
         }, {
             headers: {
@@ -74,12 +73,23 @@ const Login = () => {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
-        })
+        }).catch(function (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    alert(`Incorrect username or password, please try again!`);
+                    return;
+                }
+            } else {
+                console.log('Error: ', error.message);
+            }
+        });
+        if (!response) {
+            return;
+        }
+
         if (response.data.message === 'logged in') {
             Cookies.set('user', true)
             navigate('/', { replace: true });
-        } else {
-            alert(`Incorrect username or password, please try again!`);
         }
     }
 
