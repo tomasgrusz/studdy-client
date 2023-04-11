@@ -281,7 +281,7 @@ const DeckList = ({ setSelectedDeck, setStudySession, setShareDeck }) => {
     //run getDeckList once when component renders
     useEffect(() => {
         getDeckList()
-    })
+    }, [])
 
     const filterCategory = (category) => {
         let newFilter = [...categoryFilter];
